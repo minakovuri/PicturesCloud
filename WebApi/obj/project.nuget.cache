@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mWqcXcOG/OH8nOvsZttTpP6/n8wetB1RmwC7kgY0CbLWd5WKtVAgUZ5PBe/exLNEmlBAq3ld3d6DbTSsWOVyKQ==",
+  "dgSpecHash": "9W9xHuoU6PXpeSzlSL76woyZDh9uUSXAdYAZaz+0BB5/BWNB1eZ4Jll1cAwv7GZE+ibeWxCAWzjvVJcz9wnNJw==",
   "success": true,
-  "projectFilePath": "/home/yury/study/WebApi/WebApi.csproj",
+  "projectFilePath": "/home/yury/study/PicturesCloud/WebApi/WebApi.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

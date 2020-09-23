@@ -2,18 +2,39 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_.19.01" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_.19.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="Controllers" t="Include">
-        <e p="WeatherForecastController.cs" t="Include" />
+        <e p="ContentManagementController.cs" t="Include" />
+        <e p="Models" t="Include">
+          <e p="ContentModel.cs" t="Include" />
+        </e>
+        <e p="UserManagementController.cs" t="Include" />
       </e>
-      <e p="Models" t="Include" />
+      <e p="Core" t="Include">
+        <e p="Interfaces" t="Include">
+          <e p="IContentManagementRepository.cs" t="Include" />
+          <e p="IUserManagementRepository.cs" t="Include" />
+        </e>
+        <e p="Models" t="Include">
+          <e p="Content.cs" t="Include" />
+          <e p="User.cs" t="Include" />
+        </e>
+        <e p="Services" t="Include">
+          <e p="ContentManagementService.cs" t="Include" />
+          <e p="UserManagementService.cs" t="Include" />
+        </e>
+      </e>
       <e p="Program.cs" t="Include" />
       <e p="Properties" t="Include">
         <e p="launchSettings.json" t="Include" />
       </e>
+      <e p="Repositories" t="Include">
+        <e p="ContentManagementRepository.cs" t="Include" />
+        <e p="Entities" t="Include" />
+        <e p="UserManagementRepository.cs" t="Include" />
+      </e>
       <e p="Startup.cs" t="Include" />
-      <e p="WeatherForecast.cs" t="Include" />
       <e p="WebApi.csproj" t="IncludeRecursive" />
       <e p="appsettings.Development.json" t="Include" />
       <e p="appsettings.json" t="Include" />

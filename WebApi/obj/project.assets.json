@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/yury/study/WebApi/WebApi.csproj",
+      "projectUniqueName": "/home/yury/study/PicturesCloud/WebApi/WebApi.csproj",
       "projectName": "WebApi",
-      "projectPath": "/home/yury/study/WebApi/WebApi.csproj",
+      "projectPath": "/home/yury/study/PicturesCloud/WebApi/WebApi.csproj",
       "packagesPath": "/home/yury/.nuget/packages/",
-      "outputPath": "/home/yury/study/WebApi/obj/",
+      "outputPath": "/home/yury/study/PicturesCloud/WebApi/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/yury/.nuget/NuGet/NuGet.Config"

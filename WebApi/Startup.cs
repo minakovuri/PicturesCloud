@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebApi.Core.Interfaces;
+using WebApi.Core.Services;
+using WebApi.Repositories;
 
 namespace WebApi
 {
@@ -22,13 +25,22 @@ namespace WebApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ContentManagementRepository>();
+            services.AddSingleton<UserManagementRepository>();
+            
+            services.AddSingleton<ContentManagementService>(s => new ContentManagementService(
+                s.GetRequiredService<ContentManagementRepository>()
+            ));
+
+            services.AddSingleton<UserManagementService>(s => new UserManagementService(
+                s.GetRequiredService<UserManagementRepository>()
+            ));
+
             services.AddControllers();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
