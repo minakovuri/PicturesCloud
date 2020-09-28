@@ -1,18 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using WebApi.Core.Interfaces;
 using WebApi.Core.Services;
-using WebApi.Repositories;
+using WebApi.Repositories.DbContexts;
+using WebApi.Repositories.ContentManagement;
+using WebApi.Repositories.UserManagement;
 
 namespace WebApi
 {
@@ -27,14 +23,18 @@ namespace WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<MySqlContext>(o
+                => o.UseMySQL(Configuration.GetConnectionString("MySqlConnection"))
+            );
+
             services.AddSingleton<ContentManagementRepository>();
             services.AddSingleton<UserManagementRepository>();
             
-            services.AddSingleton<ContentManagementService>(s => new ContentManagementService(
+            services.AddSingleton(s => new ContentManagementService(
                 s.GetRequiredService<ContentManagementRepository>()
             ));
 
-            services.AddSingleton<UserManagementService>(s => new UserManagementService(
+            services.AddSingleton(s => new UserManagementService(
                 s.GetRequiredService<UserManagementRepository>()
             ));
 

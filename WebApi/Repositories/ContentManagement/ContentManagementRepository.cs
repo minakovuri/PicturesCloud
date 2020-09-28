@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using WebApi.Core.Interfaces;
 using WebApi.Core.Models;
+using WebApi.Repositories.DbContexts;
 
-namespace WebApi.Repositories
+namespace WebApi.Repositories.ContentManagement
 {
     public class ContentManagementRepository : IContentManagementRepository
     {
+        private readonly MySqlContext _dbContext;
+
         public void AddContent(Content content, string? folderId, string userId)
         {
             

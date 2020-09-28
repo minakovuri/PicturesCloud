@@ -10,16 +10,9 @@ namespace WebApi.Repositories.DbContexts
         public DbSet<File> Files { get; set; }
         public DbSet<Folder> Folders { get; set; }
 
-        public MySqlContext()
+        public MySqlContext(DbContextOptions<MySqlContext> options)
+            : base(options)
         {
-            Database.EnsureCreated();
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySQL(
-                "server=localhost;UserId=pictures_cloud_admin;Password=1234;database=pictures_cloud;"
-            );
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace WebApi.Repositories
+namespace WebApi.Repositories.ContentManagement
 {
     public class FilesStorage
     {

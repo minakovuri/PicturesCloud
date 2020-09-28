@@ -7,6 +7,7 @@ namespace WebApi.Repositories.Entities
         public int Id { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
+        public string Avatar { get; set; }
 
         public List<Content> Contents { get; set; }
     }
