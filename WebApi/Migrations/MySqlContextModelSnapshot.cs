@@ -57,27 +57,16 @@ namespace WebApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Login")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("WebApi.Repositories.Entities.File", b =>
-                {
-                    b.HasBaseType("WebApi.Repositories.Entities.Content");
-
-                    b.Property<bool>("AddedToFavourites")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Path")
-                        .HasColumnType("text");
-
-                    b.HasDiscriminator().HasValue("File");
                 });
 
             modelBuilder.Entity("WebApi.Repositories.Entities.Folder", b =>
@@ -87,10 +76,24 @@ namespace WebApi.Migrations
                     b.HasDiscriminator().HasValue("Folder");
                 });
 
+            modelBuilder.Entity("WebApi.Repositories.Entities.Image", b =>
+                {
+                    b.HasBaseType("WebApi.Repositories.Entities.Content");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Starred")
+                        .HasColumnType("bit");
+
+                    b.HasDiscriminator().HasValue("Image");
+                });
+
             modelBuilder.Entity("WebApi.Repositories.Entities.Content", b =>
                 {
-                    b.HasOne("WebApi.Repositories.Entities.Folder", null)
-                        .WithMany("Contents")
+                    b.HasOne("WebApi.Repositories.Entities.Folder", "Folder")
+                        .WithMany()
                         .HasForeignKey("FolderId");
 
                     b.HasOne("WebApi.Repositories.Entities.User", null)

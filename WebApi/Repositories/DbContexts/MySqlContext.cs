@@ -7,7 +7,7 @@ namespace WebApi.Repositories.DbContexts
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Content> Contents { get; set; }
-        public DbSet<File> Files { get; set; }
+        public DbSet<Image> Images { get; set; }
         public DbSet<Folder> Folders { get; set; }
 
         public MySqlContext(DbContextOptions<MySqlContext> options)
