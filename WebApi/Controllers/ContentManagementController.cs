@@ -1,13 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Controllers.Models;
+using WebApi.Controllers.RequestModels;
+using WebApi.Controllers.ResponseModels;
 using WebApi.Core.Services;
 
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("api/contents")]
     public class ContentManagementController : ControllerBase
     {
         private readonly ContentManagementService _service;
@@ -17,19 +16,72 @@ namespace WebApi.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public IEnumerable<ContentModel> GetContents()
+        [HttpPost]
+        [Route("api/image")]
+        public ActionResult<AddImageResponse> AddImage([FromBody] AddImageRequest request)
         {
-            var contents = _service.GetContents(null, "");
+            AddImageResponse response = new AddImageResponse();
+            return Ok(response);
+        }
 
-            return contents.Select(content => new ContentModel
-                {
-                    id = content.Id,
-                    title = content.Title,
-                    type = content.Type,
-                    size = content.Size
-                })
-                .ToArray();
+        [HttpPost]
+        [Route("api/image/upload")]
+        public IActionResult UploadImage(IFormFile file)
+        {
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("api/content/{contentId}")]
+        public IActionResult DeleteContent(string contentId)
+        {
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/content/{contentId}")]
+        public ActionResult<GetContentResponse> GetContent(string contentId)
+        {
+            GetContentResponse response = new GetContentResponse();
+            return Ok(response);
+        }
+        
+        [HttpPost]
+        [Route("api/folder")]
+        public ActionResult<AddFolderResponse> AddFolder([FromBody] AddFolderRequest request)
+        {
+            AddFolderResponse response = new AddFolderResponse();
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("api/content/starred")]
+        public IActionResult AddToStarred([FromBody] AddToStarredRequest request)
+        {
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/contents")]
+        public ActionResult<GetContentsResponse> GetContents()
+        {
+            GetContentsResponse response = new GetContentsResponse();
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("api/contents/starred")]
+        public ActionResult<GetContentsResponse> GetStarredContents()
+        {
+            GetContentsResponse response = new GetContentsResponse();
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("api/image/download/{path}")]
+        public ActionResult<FileStreamResult> DownloadImage()
+        {
+            return NotFound();
         }
     }
 }
