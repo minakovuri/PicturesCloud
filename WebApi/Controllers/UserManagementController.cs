@@ -23,7 +23,15 @@ namespace WebApi.Controllers
         [Route("api/user/register")]
         public IActionResult Register([FromBody] RegisterRequest request)
         {
-            return Ok();
+            try
+            {
+                _service.AddUser(request.Login, request.Password);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500);
+            }
         }
 
         [AllowAnonymous]

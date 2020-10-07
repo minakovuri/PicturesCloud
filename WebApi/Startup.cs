@@ -27,14 +27,14 @@ namespace WebApi
                 => o.UseMySQL(Configuration.GetConnectionString("MySqlConnection"))
             );
 
-            services.AddSingleton<ContentManagementRepository>();
-            services.AddSingleton<UserManagementRepository>();
+            services.AddScoped<ContentManagementRepository>();
+            services.AddScoped<UserManagementRepository>();
             
-            services.AddSingleton(s => new ContentManagementService(
+            services.AddScoped(s => new ContentManagementService(
                 s.GetRequiredService<ContentManagementRepository>()
             ));
 
-            services.AddSingleton(s => new UserManagementService(
+            services.AddScoped(s => new UserManagementService(
                 s.GetRequiredService<UserManagementRepository>()
             ));
 

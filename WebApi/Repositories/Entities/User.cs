@@ -9,8 +9,11 @@ namespace WebApi.Repositories.Entities
         [Required]
         public string Login { get; set; }
         [Required]
-        public string Password { get; set; }
-        public string Avatar { get; set; }
+        [MaxLength(16)]
+        public byte[] PasswordHash { get; set; }
+        [Required]
+        [MaxLength(16)]
+        public byte[] PasswordSalt { get; set; }
 
         [Required]
         public List<Content> Contents { get; set; }
