@@ -1,8 +1,10 @@
 using System;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Controllers.RequestModels;
 using WebApi.Controllers.ResponseModels;
+using WebApi.Core.Errors;
 using WebApi.Core.Models;
 using WebApi.Core.Services;
 
@@ -28,9 +30,17 @@ namespace WebApi.Controllers
                 _service.AddUser(request.Login, request.Password);
                 return Ok();
             }
+            catch (LoginTakenError e)
+            {
+                return StatusCode(StatusCodes.Status409Conflict, e.Message);
+            }
+            catch (InvalidPasswordError e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, e.Message);
+            }
             catch (Exception e)
             {
-                return StatusCode(500);
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
 

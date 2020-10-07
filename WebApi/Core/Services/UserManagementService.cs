@@ -1,4 +1,5 @@
 using System;
+using WebApi.Core.Errors;
 using WebApi.Core.Interfaces;
 using WebApi.Core.Models;
 
@@ -16,17 +17,13 @@ namespace WebApi.Core.Services
         public void AddUser(string login, string password)
         {
             if (string.IsNullOrWhiteSpace(password))
-                throw new Exception("Password is required");
+                throw new InvalidPasswordError("Password is required");
             
-            // TODO: проверка на существование такого пользователя
+            if (_repository.LoginAlreadyTaken(login))
+                throw new LoginTakenError("Login \"" + login + "\" is already taken");
 
             byte[] passwordHash, passwordSalt;
-            
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
             User user = new User()
             {
@@ -36,6 +33,15 @@ namespace WebApi.Core.Services
             };
 
             _repository.AddUser(user);
+        }
+        
+        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using WebApi.Core.Interfaces;
 using WebApi.Core.Models;
 using WebApi.Repositories.DbContexts;
@@ -27,6 +28,11 @@ namespace WebApi.Repositories.UserManagement
 
             _dbContext.Users.Add(entity);
             _dbContext.SaveChanges();
+        }
+
+        public bool LoginAlreadyTaken(string login)
+        {
+            return _dbContext.Users.Any(user => user.Login == login);
         }
     }
 }
