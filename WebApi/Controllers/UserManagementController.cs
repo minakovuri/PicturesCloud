@@ -55,7 +55,7 @@ namespace WebApi.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("api/user/auth")]
-        public ActionResult<AuthResponse> Auth([FromBody] AuthRequest request)
+        public IActionResult Auth([FromBody] AuthRequest request)
         {
             try
             {
@@ -98,6 +98,17 @@ namespace WebApi.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
             }
+        }
+
+        [HttpPut]
+        [Route("api/user")]
+        public IActionResult Update([FromBody] UpdateUserRequest request)
+        {
+            var userId = User.Identity.Name;
+            
+            // TODO
+
+            return Ok();
         }
     }
 }

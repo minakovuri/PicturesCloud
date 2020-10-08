@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Controllers.RequestModels;
@@ -6,6 +7,7 @@ using WebApi.Core.Services;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     public class ContentManagementController : ControllerBase
     {
