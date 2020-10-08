@@ -1,6 +1,4 @@
 using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +8,7 @@ using WebApi.Controllers.ResponseModels;
 using WebApi.Core.Errors;
 using WebApi.Core.Services;
 using WebApi.Settings;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
+using WebApi.Controllers.Utils;
 
 namespace WebApi.Controllers
 {
@@ -60,26 +57,12 @@ namespace WebApi.Controllers
             try
             {
                 var user = _service.Authenticate(request.Login, request.Password);
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
-
-                var tokenDescriptor = new SecurityTokenDescriptor()
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
-                        new Claim(ClaimTypes.Name, user.Id.ToString())
-                    }),
-                    Expires = DateTime.UtcNow.AddDays(7),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
-
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                var tokenString = tokenHandler.WriteToken(token);
+                string token = TokenGenerator.GenerateToken(_jwtSettings.Secret, user.Id.ToString());
 
                 return Ok(new AuthResponse
                 {
                     User = user,
-                    Token = tokenString
+                    Token = token
                 });
             }
             catch (AuthInvalidParamsError e)
