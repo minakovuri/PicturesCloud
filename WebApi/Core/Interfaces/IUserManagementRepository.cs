@@ -7,5 +7,7 @@ namespace WebApi.Core.Interfaces
         public void AddUser(User user);
 
         public bool LoginAlreadyTaken(string login);
+
+        public User? GetUserByLogin(string login);
     }
 }

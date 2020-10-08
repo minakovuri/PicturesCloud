@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using WebApi.Core.Errors;
 using WebApi.Core.Interfaces;
 using WebApi.Core.Models;
 using WebApi.Repositories.DbContexts;
@@ -33,6 +34,23 @@ namespace WebApi.Repositories.UserManagement
         public bool LoginAlreadyTaken(string login)
         {
             return _dbContext.Users.Any(user => user.Login == login);
+        }
+
+        public User? GetUserByLogin(string login)
+        {
+            var user = _dbContext.Users.SingleOrDefault(x => x.Login == login);
+            if (user == null)
+            {
+                return null;  
+            }
+
+            return new User()
+            {
+                Id = user.Id,
+                Login = user.Login,
+                PasswordHash = user.PasswordHash,
+                PasswordSalt = user.PasswordSalt
+            };
         }
     }
 }
