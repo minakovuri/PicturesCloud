@@ -30,10 +30,11 @@ namespace WebApi.Migrations
                     b.Property<int?>("FolderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -96,12 +97,14 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Repositories.Entities.Content", b =>
                 {
                     b.HasOne("WebApi.Repositories.Entities.Folder", "Folder")
-                        .WithMany()
+                        .WithMany("Contents")
                         .HasForeignKey("FolderId");
 
-                    b.HasOne("WebApi.Repositories.Entities.User", null)
+                    b.HasOne("WebApi.Repositories.Entities.User", "User")
                         .WithMany("Contents")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -16,23 +16,22 @@ namespace WebApi.Core.Services
         public User Authenticate(string login, string password)
         {
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
-                throw new AuthInvalidParamsError("Password and login are required");
+                throw new InvalidParamsError("Password and login are required");
 
-            var user = _repository.GetUserByLogin(login);
-
+            var user = _repository.GetUser(login);
             if (user == null)
-                throw new AuthUserNotExistError("User with login \"" + login + "\" doesn't exist");
+                throw new UserNotExistError("User with login \"" + login + "\" doesn't exist");
             
-            if (!PasswordManager.VerifyPasswordHash(password, user.Value.PasswordHash, user.Value.PasswordSalt))
+            if (!PasswordManager.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 throw new AuthVerifyPasswordError("Password \"" + password + "\"is incorrect");
 
-            return user.Value;
+            return user;
         }
 
         public void AddUser(string login, string password)
         {
             if (string.IsNullOrWhiteSpace(password))
-                throw new RegistrationInvalidParamsError("Password is required");
+                throw new InvalidParamsError("Password is required");
             
             if (_repository.LoginAlreadyTaken(login))
                 throw new RegistrationLoginTakenError("Login \"" + login + "\" is already taken");
@@ -49,14 +48,5 @@ namespace WebApi.Core.Services
 
             _repository.AddUser(user);
         }
-        
-        /*private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-        }*/
     }
 }

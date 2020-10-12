@@ -1,10 +1,11 @@
 namespace WebApi.Core.Models
 {
-    public struct Content
+    public class Content
     {
-        public string Id;
-        public string Title;
-        public string Type;
-        public int Size;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int? FolderId { get; set; }
+
+        public int UserId { get; set; }
     }
 }

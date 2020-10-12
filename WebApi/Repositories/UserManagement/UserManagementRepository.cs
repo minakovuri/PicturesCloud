@@ -36,13 +36,11 @@ namespace WebApi.Repositories.UserManagement
             return _dbContext.Users.Any(user => user.Login == login);
         }
 
-        public User? GetUserByLogin(string login)
+        public User GetUser(string login)
         {
             var user = _dbContext.Users.SingleOrDefault(x => x.Login == login);
             if (user == null)
-            {
-                return null;  
-            }
+                throw new UserNotExistError("User not exist");
 
             return new User()
             {

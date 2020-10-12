@@ -17,11 +17,13 @@ namespace WebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
         {
+            WebHostEnvironment = webHostEnvironment;
             Configuration = configuration;
         }
 
+        private IWebHostEnvironment WebHostEnvironment;
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)

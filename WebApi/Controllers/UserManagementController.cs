@@ -39,7 +39,7 @@ namespace WebApi.Controllers
             {
                 return StatusCode(StatusCodes.Status409Conflict, new {message = e.Message});
             }
-            catch (RegistrationInvalidParamsError e)
+            catch (InvalidParamsError e)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, new {message = e.Message});
             }
@@ -65,11 +65,11 @@ namespace WebApi.Controllers
                     Token = token
                 });
             }
-            catch (AuthInvalidParamsError e)
+            catch (InvalidParamsError e)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, new {message = e.Message});
             }
-            catch (AuthUserNotExistError e)
+            catch (UserNotExistError e)
             {
                 return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
             }
@@ -88,7 +88,7 @@ namespace WebApi.Controllers
         public IActionResult Update([FromBody] UpdateUserRequest request)
         {
             var userId = User.Identity.Name;
-            
+
             // TODO
 
             return Ok();
