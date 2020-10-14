@@ -28,5 +28,10 @@ namespace WebApi.Repositories.ContentManagement
         {
             return File.Exists(_rootPath + path);
         }
+
+        public string GetRootPath()
+        {
+            return _rootPath;
+        }
     }
 }

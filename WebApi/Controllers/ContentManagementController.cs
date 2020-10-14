@@ -123,10 +123,33 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/image/download/{path}")]
-        public ActionResult<FileStreamResult> DownloadImage()
+        [Route("api/image/download/{imageId}")]
+        public IActionResult DownloadImage(int imageId)
         {
-            return NotFound();
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+                _service.CheckUserExists(userId);
+
+                Image image = _service.GetImage(imageId);
+
+                string uploadUrl = _service.GetImageUploadUrl(image);
+                string mimeType = MimeMapping.MimeUtility.GetMimeMapping(image.Name);
+
+                return PhysicalFile(uploadUrl, mimeType, image.Name);
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (ContentNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
         }
     }
 }

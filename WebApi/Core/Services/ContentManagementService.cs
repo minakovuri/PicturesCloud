@@ -71,6 +71,11 @@ namespace WebApi.Core.Services
             _fileStorage.SaveImage(uploadUrl, image);
         }
 
+        public string GetImageUploadUrl(Image image)
+        {
+            return _fileStorage.GetRootPath() + "/" + image.Path;
+        }
+
         public void DeleteContent(string contentId)
         {
             
