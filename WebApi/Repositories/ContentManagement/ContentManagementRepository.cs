@@ -70,6 +70,25 @@ namespace WebApi.Repositories.ContentManagement
             };
         }
 
+        public Folder? GetFolder(int id)
+        {
+            var entity = _dbContext.Folders.SingleOrDefault(x => x.Id == id);
+
+            if (entity == null)
+            {
+                return null;
+            }
+
+            return new Folder()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                FolderId = entity.Folder == null
+                    ? (int?) null
+                    : entity.Folder.Id,
+            };
+        }
+
         public User? GetUser(int id)
         {
             var user = _dbContext.Users.SingleOrDefault(x => x.Id == id);

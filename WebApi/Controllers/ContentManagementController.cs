@@ -28,6 +28,8 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
+                _service.CheckUserExists(userId);
+
                 int imageId = _service.AddImage(request.FileName, request.FolderId, userId);
                 Image image = _service.GetImage(imageId);
 
@@ -54,9 +56,19 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.UploadImage(image, uploadUrl, userId);
+                _service.CheckUserExists(userId);
+
+                _service.UploadImage(image, uploadUrl);
 
                 return Ok();
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (ImageAlreadyUploadError e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, new {message = e.Message});
             }
             catch (Exception e)
             {

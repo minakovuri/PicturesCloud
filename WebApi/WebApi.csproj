@@ -15,5 +15,10 @@
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.20" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Storage" />
+    <Folder Include="Storage\user1" />
+  </ItemGroup>
+
 
 </Project>

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
 using WebApi.Core.Models;
 
 namespace WebApi.Core.Interfaces
@@ -12,10 +11,10 @@ namespace WebApi.Core.Interfaces
 
         public Image? GetImage(int id);
 
+        public Folder? GetFolder(int id);
+
         public User? GetUser(int id);
 
         public List<Content> GetContents(string? folderId, string userId);
-        
-        public void SaveImage(string path, IFormFile image);
     }
 }

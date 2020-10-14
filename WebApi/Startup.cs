@@ -17,13 +17,10 @@ namespace WebApi
 {
     public class Startup
     {
-        public Startup(IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
+        public Startup(IConfiguration configuration)
         {
-            WebHostEnvironment = webHostEnvironment;
             Configuration = configuration;
         }
-
-        private IWebHostEnvironment WebHostEnvironment;
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
@@ -32,11 +29,13 @@ namespace WebApi
                 => o.UseMySQL(Configuration.GetConnectionString("MySqlConnection"))
             );
 
+            services.AddScoped<FileStorage>();
             services.AddScoped<ContentManagementRepository>();
             services.AddScoped<UserManagementRepository>();
             
             services.AddScoped(s => new ContentManagementService(
-                s.GetRequiredService<ContentManagementRepository>()
+                s.GetRequiredService<ContentManagementRepository>(),
+                s.GetRequiredService<FileStorage>()
             ));
 
             services.AddScoped(s => new UserManagementService(
