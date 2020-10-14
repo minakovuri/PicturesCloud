@@ -30,6 +30,10 @@ namespace WebApi.Migrations
                     b.Property<int?>("FolderId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Guid")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -53,6 +57,10 @@ namespace WebApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("Guid")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Login")
                         .IsRequired()

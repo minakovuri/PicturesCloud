@@ -4,6 +4,8 @@ namespace WebApi.Core.Models
     {
         public int Id { get; set; }
         public string Login { get; set; }
+        
+        public string Guid { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
     }

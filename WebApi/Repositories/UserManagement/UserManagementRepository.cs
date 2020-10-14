@@ -21,6 +21,7 @@ namespace WebApi.Repositories.UserManagement
             Entities.User entity = new Entities.User()
             {
                 Id = user.Id,
+                Guid = user.Guid,
                 Login = user.Login,
                 PasswordHash = user.PasswordHash,
                 PasswordSalt = user.PasswordSalt,
@@ -46,6 +47,7 @@ namespace WebApi.Repositories.UserManagement
             {
                 Id = user.Id,
                 Login = user.Login,
+                Guid = user.Guid,
                 PasswordHash = user.PasswordHash,
                 PasswordSalt = user.PasswordSalt
             };

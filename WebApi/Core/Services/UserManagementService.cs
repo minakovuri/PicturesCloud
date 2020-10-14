@@ -1,3 +1,4 @@
+using System;
 using WebApi.Core.Errors;
 using WebApi.Core.Interfaces;
 using WebApi.Core.Models;
@@ -42,6 +43,7 @@ namespace WebApi.Core.Services
             User user = new User()
             {
                 Login = login,
+                Guid = Guid.NewGuid().ToString(),
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
             };

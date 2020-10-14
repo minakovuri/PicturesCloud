@@ -8,9 +8,14 @@ namespace WebApi.Repositories.Entities
         public int Id { get; set; }
         [Required]
         public string Login { get; set; }
+
+        [Required]
+        public string Guid { get; set; }
+        
         [Required]
         [MaxLength(16)]
         public byte[] PasswordHash { get; set; }
+
         [Required]
         [MaxLength(16)]
         public byte[] PasswordSalt { get; set; }

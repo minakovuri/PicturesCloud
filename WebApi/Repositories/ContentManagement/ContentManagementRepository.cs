@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using WebApi.Core.Interfaces;
 using WebApi.Core.Models;
 using WebApi.Repositories.DbContexts;
@@ -12,12 +9,10 @@ namespace WebApi.Repositories.ContentManagement
     public class ContentManagementRepository : IContentManagementRepository
     {
         private readonly MySqlContext _dbContext;
-        private readonly string _rootPath;
 
-        public ContentManagementRepository(MySqlContext dbContext, IWebHostEnvironment webHostEnvironment)
+        public ContentManagementRepository(MySqlContext dbContext)
         {
             _dbContext = dbContext;
-            _rootPath = webHostEnvironment.ContentRootPath + "/Storage";
         }
 
         public int AddImage(Image image)
@@ -27,6 +22,7 @@ namespace WebApi.Repositories.ContentManagement
             var entity = new Entities.Image
             {
                 Name = image.Name,
+                Guid = image.Guid,
                 User = user,
                 Folder = null,
                 Path = image.Path,
@@ -61,6 +57,7 @@ namespace WebApi.Repositories.ContentManagement
             return new Image()
             {
                 Id = entity.Id,
+                Guid = entity.Guid,
                 Name = entity.Name,
                 FolderId = entity.Folder == null
                     ? (int?) null
@@ -82,6 +79,7 @@ namespace WebApi.Repositories.ContentManagement
             return new Folder()
             {
                 Id = entity.Id,
+                Guid = entity.Guid,
                 Name = entity.Name,
                 FolderId = entity.Folder == null
                     ? (int?) null
@@ -101,6 +99,7 @@ namespace WebApi.Repositories.ContentManagement
             return new User()
             {
                 Id = user.Id,
+                Guid = user.Guid,
                 Login = user.Login,
                 PasswordHash = user.PasswordHash,
                 PasswordSalt = user.PasswordSalt
@@ -111,16 +110,6 @@ namespace WebApi.Repositories.ContentManagement
         {
             var contents = new List<Content>();
             return contents;
-        }
-        
-        public void SaveImage(string path, IFormFile image)
-        {
-            Directory.CreateDirectory(Path.GetDirectoryName(_rootPath + path));
-
-            using (var fileStream = new FileStream(_rootPath + path, FileMode.Create))
-            {
-                image.CopyTo(fileStream);
-            }  
         }
     }
 }
