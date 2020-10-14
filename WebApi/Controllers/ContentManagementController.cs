@@ -133,10 +133,10 @@ namespace WebApi.Controllers
 
                 Image image = _service.GetImage(imageId);
 
-                string uploadUrl = _service.GetImageUploadUrl(image);
+                string downloadUrl = _service.GetImageUploadUrl(image);
                 string mimeType = MimeMapping.MimeUtility.GetMimeMapping(image.Name);
 
-                return PhysicalFile(uploadUrl, mimeType, image.Name);
+                return PhysicalFile(downloadUrl, mimeType, image.Name);
             }
             catch (UserNotExistError e)
             {
