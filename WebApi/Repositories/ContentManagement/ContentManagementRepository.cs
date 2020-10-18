@@ -149,7 +149,7 @@ namespace WebApi.Repositories.ContentManagement
                 return null;  
             }
 
-            return new User()
+            return new User
             {
                 Id = user.Id,
                 Guid = user.Guid,
@@ -159,9 +159,33 @@ namespace WebApi.Repositories.ContentManagement
             };
         }
 
-        public List<Content> GetContents(string? folderId, string userId)
+        public List<Content> GetContents(int? folderId, int userId)
         {
+            var user = _dbContext.Users.SingleOrDefault(x => x.Id == userId);
+            var folder = folderId == null
+                ? null
+                : _dbContext.Folders.SingleOrDefault(x => x.Id == folderId.Value);
+
+            var entitiesList = _dbContext.Contents
+                .Where(x => x.Folder == folder && x.User == user);
+
             var contents = new List<Content>();
+
+            foreach (var entity in entitiesList)
+            {
+                Content content = new Content
+                {
+                    Id = entity.Id,
+                    Name = entity.Name,
+                    Guid = entity.Guid,
+                    FolderId = entity.Folder == null
+                        ? (int?) null
+                        : entity.Folder.Id,
+                };
+                
+                contents.Add(content);
+            }
+            
             return contents;
         }
     }

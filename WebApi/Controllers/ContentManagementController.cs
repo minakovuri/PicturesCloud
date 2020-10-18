@@ -156,8 +156,60 @@ namespace WebApi.Controllers
         [Route("api/contents")]
         public ActionResult<GetContentsResponse> GetContents()
         {
-            GetContentsResponse response = new GetContentsResponse();
-            return Ok(response);
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+                _service.CheckUserExists(userId);
+
+                var contents  = _service.GetContents(null, userId);
+
+                return Ok(new GetContentsResponse()
+                {
+                    Contents = contents.ToArray(),
+                });
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (ContentNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
+        }
+        
+        [HttpGet]
+        [Route("api/contents/{folderId}")]
+        public ActionResult<GetContentsResponse> GetContents(int folderId)
+        {
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+                _service.CheckUserExists(userId);
+
+                var contents  = _service.GetContents(folderId, userId);
+
+                return Ok(new GetContentsResponse()
+                {
+                    Contents = contents.ToArray(),
+                });
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (ContentNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
         }
 
         [HttpGet]
