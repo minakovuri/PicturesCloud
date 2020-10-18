@@ -82,9 +82,29 @@ namespace WebApi.Controllers
 
         [HttpDelete]
         [Route("api/content/{contentId}")]
-        public IActionResult DeleteContent(string contentId)
+        public IActionResult DeleteContent(int contentId)
         {
-            return Ok();
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+                _service.CheckUserExists(userId);
+                
+                _service.DeleteContent(contentId);
+
+                return Ok();
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (ContentNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
         }
 
         [HttpGet]

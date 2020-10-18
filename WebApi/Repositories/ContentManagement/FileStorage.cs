@@ -24,6 +24,14 @@ namespace WebApi.Repositories.ContentManagement
             }  
         }
 
+        public void DeleteImage(string path)
+        {
+            if (ImageExist(path))
+            {
+                File.Delete(_rootPath + path);
+            }
+        }
+
         public bool ImageExist(string path)
         {
             return File.Exists(_rootPath + path);

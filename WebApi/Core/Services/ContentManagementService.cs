@@ -97,9 +97,18 @@ namespace WebApi.Core.Services
             return _fileStorage.GetRootPath() + "/" + image.Path;
         }
 
-        public void DeleteContent(string contentId)
+        public void DeleteContent(int contentId)
         {
+            if (_repository.GetContent(contentId) == null)
+                throw new ContentNotExistError("cannot find removable content");
+    
+            var possibleImage = GetImage(contentId);
+            if (possibleImage != null)
+            {
+                _fileStorage.DeleteImage(possibleImage.Path);
+            }
             
+            _repository.DeleteContent(contentId);
         }
 
         public List<Content> GetContents(string? folderId, string userId)

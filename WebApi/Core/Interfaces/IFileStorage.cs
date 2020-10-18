@@ -6,6 +6,8 @@ namespace WebApi.Core.Interfaces
     {
         public void SaveImage(string path, IFormFile image);
 
+        public void DeleteImage(string path);
+
         public bool ImageExist(string path);
 
         public string GetRootPath();

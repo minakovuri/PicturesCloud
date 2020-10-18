@@ -9,7 +9,9 @@ namespace WebApi.Core.Interfaces
 
         public int AddFolder(Folder folder);
 
-        public void DeleteContent(string contentId);
+        public void DeleteContent(int id);
+
+        public Content? GetContent(int id);
 
         public Image? GetImage(int id);
 

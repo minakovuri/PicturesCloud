@@ -62,14 +62,35 @@ namespace WebApi.Repositories.ContentManagement
             return entity.Id;
         }
 
-        public void AddImage(Image image, Folder folder)
+        public void DeleteContent(int id)
         {
-            
+            var entity = _dbContext.Contents
+                .SingleOrDefault(x => x.Id == id);
+
+            _dbContext.Contents.Remove(entity);
+            _dbContext.SaveChanges();
         }
 
-        public void DeleteContent(string contentId)
+        public Content? GetContent(int id)
         {
+            var entity = _dbContext.Contents
+                .Include(x => x.Folder)
+                .SingleOrDefault(x => x.Id == id);
             
+            if (entity == null)
+            {
+                return null;
+            }
+
+            return new Content
+            {
+                Id = entity.Id,
+                Guid = entity.Guid,
+                Name = entity.Name,
+                FolderId = entity.Folder == null
+                    ? (int?) null
+                    : entity.Folder.Id,
+            };
         }
 
         public Image? GetImage(int id)
@@ -92,6 +113,7 @@ namespace WebApi.Repositories.ContentManagement
                     ? (int?) null
                     : entity.Folder.Id,
                 Path = entity.Path,
+                UserId = entity.User.Id,
                 Starred = entity.Starred,
             };
         }
