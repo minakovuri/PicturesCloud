@@ -7,6 +7,8 @@ namespace WebApi.Core.Interfaces
     {
         public int AddImage(Image image);
 
+        public int AddFolder(Folder folder);
+
         public void DeleteContent(string contentId);
 
         public Image? GetImage(int id);

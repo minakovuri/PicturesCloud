@@ -41,6 +41,9 @@ namespace WebApi.Core.Services
         {
             var user = _repository.GetUser(userId);
 
+            if (folderId != null && _repository.GetFolder(folderId.Value) == null)
+                throw new ContentNotExistError("parent folder doesn't exist");
+
             var guid = Guid.NewGuid().ToString();
             var uniqueFileName = guid + Path.GetExtension(fileName);
 
@@ -48,12 +51,10 @@ namespace WebApi.Core.Services
             {
                 Name = fileName,
                 Guid = guid,
-                FolderId = folderId == null
-                    ? null
-                    : folderId,
+                FolderId = folderId,
                 Path = folderId == null
-                    ? GetRootImagePath(uniqueFileName, user)
-                    : GetImagePath(uniqueFileName, user, folderId.Value),
+                    ? GetRootContentPath(uniqueFileName, user)
+                    : GetContentPath(uniqueFileName, user, folderId.Value),
                 Starred = false,
                 UserId = userId,
             };
@@ -61,6 +62,26 @@ namespace WebApi.Core.Services
             int imageId = _repository.AddImage(image);
 
             return imageId;
+        }
+
+        public int AddFolder(string folderName, int? parentFolderId, int userId)
+        {
+            if (parentFolderId != null && _repository.GetFolder(parentFolderId.Value) == null)
+                throw new ContentNotExistError("parent folder doesn't exist");
+
+            var guid = Guid.NewGuid().ToString();
+
+            Folder folder = new Folder()
+            {
+                Name = folderName,
+                Guid = guid,
+                FolderId = parentFolderId,
+                UserId = userId,
+            };
+
+            int folderId = _repository.AddFolder(folder);
+
+            return folderId;
         }
 
         public void UploadImage(IFormFile image, string uploadUrl)
@@ -86,20 +107,20 @@ namespace WebApi.Core.Services
             return _repository.GetContents(folderId, userId);
         }
 
-        private string GetRootImagePath(string fileName, User user)
+        private string GetRootContentPath(string contentName, User user)
         {
-            return "/" + user.Guid + "/" + fileName;
+            return "/" + user.Guid + "/" + contentName;
         }
 
-        private string GetImagePath(string fileName, User user, int folderId)
+        private string GetContentPath(string contentName, User user, int folderId)
         {
-            string path = "/" + user.Guid + "/";
+            string path = "";
 
             Folder folder = _repository.GetFolder(folderId);
 
             return folder == null
-                ? path + "/" + fileName
-                : GetFolderPath(path, folder) + "/" + fileName;
+                ? "/" + user.Guid + "/" + contentName
+                : "/" + user.Guid + "/" + GetFolderPath(path, folder) + contentName;
         }
 
         private string GetFolderPath(string path, Folder folder)

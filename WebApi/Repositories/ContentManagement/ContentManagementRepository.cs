@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Core.Interfaces;
 using WebApi.Core.Models;
 using WebApi.Repositories.DbContexts;
@@ -19,17 +20,43 @@ namespace WebApi.Repositories.ContentManagement
         {
             var user = _dbContext.Users.SingleOrDefault(x => x.Id == image.UserId);
 
+            var folder = image.FolderId == null
+                ? null
+                : _dbContext.Folders.SingleOrDefault(x => x.Id == image.FolderId);
+
             var entity = new Entities.Image
             {
                 Name = image.Name,
                 Guid = image.Guid,
                 User = user,
-                Folder = null,
+                Folder = folder,
                 Path = image.Path,
                 Starred = image.Starred,
             };
 
             _dbContext.Images.Add(entity);
+            _dbContext.SaveChanges();
+
+            return entity.Id;
+        }
+
+        public int AddFolder(Folder folder)
+        {
+            var user = _dbContext.Users.SingleOrDefault(x => x.Id == folder.UserId);
+            
+            var parentFolder = folder.FolderId == null
+                ? null
+                : _dbContext.Folders.SingleOrDefault(x => x.Id == folder.FolderId);
+
+            var entity = new Entities.Folder()
+            {
+                Name = folder.Name,
+                Guid = folder.Guid,
+                User = user,
+                Folder = parentFolder,
+            };
+            
+            _dbContext.Folders.Add(entity);
             _dbContext.SaveChanges();
 
             return entity.Id;
@@ -47,7 +74,9 @@ namespace WebApi.Repositories.ContentManagement
 
         public Image? GetImage(int id)
         {
-            var entity = _dbContext.Images.SingleOrDefault(x => x.Id == id);
+            var entity = _dbContext.Images
+                .Include(x => x.Folder)
+                .SingleOrDefault(x => x.Id == id);
 
             if (entity == null)
             {
@@ -69,14 +98,16 @@ namespace WebApi.Repositories.ContentManagement
 
         public Folder? GetFolder(int id)
         {
-            var entity = _dbContext.Folders.SingleOrDefault(x => x.Id == id);
+            var entity = _dbContext.Folders
+                .Include(f => f.Folder)
+                .SingleOrDefault(x => x.Id == id);
 
             if (entity == null)
             {
                 return null;
             }
 
-            return new Folder()
+            return new Folder
             {
                 Id = entity.Id,
                 Guid = entity.Guid,
@@ -95,7 +126,7 @@ namespace WebApi.Repositories.ContentManagement
             {
                 return null;  
             }
-            
+
             return new User()
             {
                 Id = user.Id,

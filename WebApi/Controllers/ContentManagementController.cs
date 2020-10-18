@@ -43,6 +43,10 @@ namespace WebApi.Controllers
             {
                 return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
             }
+            catch (ContentNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
@@ -95,8 +99,30 @@ namespace WebApi.Controllers
         [Route("api/folder")]
         public ActionResult<AddFolderResponse> AddFolder([FromBody] AddFolderRequest request)
         {
-            AddFolderResponse response = new AddFolderResponse();
-            return Ok(response);
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+                _service.CheckUserExists(userId);
+
+                int folderId = _service.AddFolder(request.FolderName, request.ParentFolderId, userId);
+
+                return Ok(new AddFolderResponse()
+                {
+                    FolderId = folderId,
+                });
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (ContentNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
         }
 
         [HttpPost]
