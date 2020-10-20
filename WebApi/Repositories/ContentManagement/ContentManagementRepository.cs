@@ -115,6 +115,7 @@ namespace WebApi.Repositories.ContentManagement
                 Path = entity.Path,
                 UserId = entity.User.Id,
                 Starred = entity.Starred,
+                Type = ContentType.Image,
             };
         }
 
@@ -137,6 +138,8 @@ namespace WebApi.Repositories.ContentManagement
                 FolderId = entity.Folder == null
                     ? (int?) null
                     : entity.Folder.Id,
+                Type = ContentType.Folder,
+                UserId = entity.User.Id,
             };
         }
 
@@ -161,19 +164,27 @@ namespace WebApi.Repositories.ContentManagement
 
         public List<Content> GetContents(int? folderId, int userId)
         {
+            var images = GetImages(folderId, userId);
+            var folders = GetFolders(folderId, userId);
+
+            return images.Concat(folders).ToList();
+        }
+
+        private List<Content> GetFolders(int? parentFolderId, int userId)
+        {
             var user = _dbContext.Users.SingleOrDefault(x => x.Id == userId);
-            var folder = folderId == null
+            var parentFolder = parentFolderId == null
                 ? null
-                : _dbContext.Folders.SingleOrDefault(x => x.Id == folderId.Value);
+                : _dbContext.Folders.SingleOrDefault(x => x.Id == parentFolderId.Value);
+            
+            var entitiesList = _dbContext.Folders
+                .Where(x => x.Folder == parentFolder && x.User == user);
 
-            var entitiesList = _dbContext.Contents
-                .Where(x => x.Folder == folder && x.User == user);
-
-            var contents = new List<Content>();
+            var folders = new List<Content>();
 
             foreach (var entity in entitiesList)
             {
-                Content content = new Content
+                Content folder = new Folder
                 {
                     Id = entity.Id,
                     Name = entity.Name,
@@ -181,12 +192,48 @@ namespace WebApi.Repositories.ContentManagement
                     FolderId = entity.Folder == null
                         ? (int?) null
                         : entity.Folder.Id,
+                    Type = ContentType.Folder,
+                    UserId = entity.User.Id,
                 };
                 
-                contents.Add(content);
+                folders.Add(folder);
             }
             
-            return contents;
+            return folders;
+        }
+
+        private List<Content> GetImages(int? folderId, int userId)
+        {
+            var user = _dbContext.Users.SingleOrDefault(x => x.Id == userId);
+            var folder = folderId == null
+                ? null
+                : _dbContext.Folders.SingleOrDefault(x => x.Id == folderId.Value);
+            
+            var entitiesList = _dbContext.Images
+                .Where(x => x.Folder == folder && x.User == user);
+
+            var images = new List<Content>();
+
+            foreach (var entity in entitiesList)
+            {
+                Content image = new Image
+                {
+                    Id = entity.Id,
+                    Name = entity.Name,
+                    Guid = entity.Guid,
+                    FolderId = entity.Folder == null
+                        ? (int?) null
+                        : entity.Folder.Id,
+                    Type = ContentType.Image,
+                    UserId = entity.User.Id,
+                    Path = entity.Path,
+                    Starred = entity.Starred
+                };
+                
+                images.Add(image);
+            }
+            
+            return images;
         }
     }
 }
