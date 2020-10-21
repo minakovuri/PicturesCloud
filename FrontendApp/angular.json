@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "FrontendApp"
+    }
+  },
+  "defaultProject": "FrontendApp",
+  "cli": {
+    "analytics": "b196767b-8a9f-461b-95d8-6c5ad552f0fc"
+  }
 }
