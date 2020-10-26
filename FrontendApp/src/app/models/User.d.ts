@@ -1,5 +1,5 @@
 export interface User {
-  readonly Id: number
-  readonly Login: string
-  readonly Guid: string
+  readonly id: number
+  readonly login: string
+  readonly password: string
 }
