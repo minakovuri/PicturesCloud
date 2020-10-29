@@ -1,1 +1,63 @@
-<p>login-page works!</p>
+<div class="login-page">
+  <form
+    class="login-form"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="form-header">
+      Авторизация
+    </div>
+    <div class="form-body">
+      <mat-form-field class="form-field">
+        <mat-label>Логин</mat-label>
+        <input
+          matInput
+          placeholder="Введите логин..."
+          name="login"
+          formControlName="login"
+        >
+        <mat-error>
+          Пожалуйста, введите Ваш логин
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Пароль</mat-label>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          placeholder="Введите пароль..."
+          name="password"
+          formControlName="password"
+        >
+        <mat-error>
+          Пожалуйста, введите Ваш пароль
+        </mat-error>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hidePasswordChange()"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePassword"
+        >
+          <mat-icon>
+            {{hidePassword ? 'visibility_off' : 'visibility'}}
+          </mat-icon>
+        </button>
+      </mat-form-field>
+
+      <p class="signup-link">
+        <span>Впервые у нас? </span>
+        <a [routerLink]="['/signup']">Зарегестрируйтесь!</a>
+      </p>
+
+      <button
+        class="submit-button"
+        mat-raised-button
+        color="primary"
+        [disabled]="form.invalid"
+      >
+        Войти
+      </button>
+    </div>
+  </form>
+</div>
