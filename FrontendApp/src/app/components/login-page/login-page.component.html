@@ -45,6 +45,10 @@
         </button>
       </mat-form-field>
 
+      <span class="auth-error-message" *ngIf="authErrorMessage">
+        Ошибка авторизации: {{authErrorMessage}}
+      </span>
+
       <p class="signup-link">
         <span>Впервые у нас? </span>
         <a [routerLink]="['/signup']">Зарегестрируйтесь!</a>

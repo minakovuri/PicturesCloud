@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {select, Store} from '@ngrx/store';
+
+import {AppState} from '../../store/state';
+import {LogIn} from '../../store/actions/auth.actions';
+import {authErrorMessageSelector} from '../../store/selectors/auth-state.selectors';
 
 @Component({
   selector: 'app-login-page',
@@ -10,12 +15,20 @@ export class LoginPageComponent implements OnInit {
   form: FormGroup
   hidePassword: boolean
 
-  constructor() {
+  authErrorMessage: string|null
+
+  constructor(
+    private store: Store<AppState>
+  ) {
     this.form = new FormGroup({
       login: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     })
     this.hidePassword = true;
+
+    this.store
+      .pipe(select(authErrorMessageSelector))
+      .subscribe((errorMessage) => this.authErrorMessage = errorMessage)
   }
 
   ngOnInit(): void {
@@ -29,7 +42,9 @@ export class LoginPageComponent implements OnInit {
     const login = this.form.controls.login.value
     const password = this.form.controls.password.value
 
-    console.log(login, password)
+    this.store.dispatch(new LogIn({
+      login, password
+    }))
   }
 
 }

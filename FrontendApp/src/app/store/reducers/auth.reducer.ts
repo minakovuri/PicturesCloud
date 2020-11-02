@@ -19,9 +19,7 @@ function authReducer(state = initialState, action: AuthAction): AuthState {
       return {
         ...state,
         isAuthenticated: true,
-        user: {
-          ...action.payload.user,
-        },
+        user: action.payload.user,
         errorMessage: null
       };
     }

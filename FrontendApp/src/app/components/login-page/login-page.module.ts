@@ -5,9 +5,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
-
-import {LoginPageComponent} from './login-page.component';
 import {CommonModule} from '@angular/common';
+
+import {LoginPageComponent} from './login-page.component'
 
 @NgModule({
   declarations: [

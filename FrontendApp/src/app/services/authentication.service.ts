@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {Observable, of} from 'rxjs';
+
 import {User} from '../models/User';
-import {Observable} from 'rxjs';
 
 interface LoginResponse {
   readonly User: User,
@@ -10,9 +11,9 @@ interface LoginResponse {
 
 @Injectable()
 class AuthenticationService {
-  private protocol = 'http'
+  private protocol = 'https'
   private host = 'localhost'
-  private port = 2000
+  private port = 5001
   private urlPrefix = 'api/user'
 
   private baseUrl = `${this.protocol}://${this.host}:${this.port}/${this.urlPrefix}`
