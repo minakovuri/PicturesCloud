@@ -4,7 +4,7 @@ import {select, Store} from '@ngrx/store';
 
 import {AppState} from '../../store/state';
 import {LogIn} from '../../store/actions/auth.actions';
-import {authErrorMessageSelector} from '../../store/selectors/auth-state.selectors';
+import {logInStateSelector} from '../../store/selectors/log-in.selectors';
 
 @Component({
   selector: 'app-login-page',
@@ -27,8 +27,8 @@ export class LoginPageComponent implements OnInit {
     this.hidePassword = true;
 
     this.store
-      .pipe(select(authErrorMessageSelector))
-      .subscribe((errorMessage) => this.authErrorMessage = errorMessage)
+      .pipe(select(logInStateSelector))
+      .subscribe((logInState) => this.authErrorMessage = logInState.errorMessage)
   }
 
   ngOnInit(): void {

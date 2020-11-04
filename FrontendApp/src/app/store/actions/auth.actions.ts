@@ -32,7 +32,7 @@ class SignUp implements Action {
 
 class SignUpSuccess implements Action {
   readonly type = AuthActionTypes.SIGNUP_SUCCESS;
-  constructor(public payload: any) {}
+  constructor(public payload: {login: string, password: string}) {}
 }
 
 class SignUpFailure implements Action {
@@ -51,6 +51,9 @@ export {
   LogIn,
   LogInSuccess,
   LogInFailure,
+  SignUp,
+  SignUpSuccess,
+  SignUpFailure,
   AuthActionTypes,
   AuthAction,
 }

@@ -1,6 +1,6 @@
 <div class="login-page">
   <form
-    class="login-form"
+    class="auth-form"
     [formGroup]="form"
     (ngSubmit)="onSubmit()"
   >
@@ -45,11 +45,11 @@
         </button>
       </mat-form-field>
 
-      <span class="auth-error-message" *ngIf="authErrorMessage">
+      <span class="error-message" *ngIf="authErrorMessage">
         Ошибка авторизации: {{authErrorMessage}}
       </span>
 
-      <p class="signup-link">
+      <p class="another-page-link">
         <span>Впервые у нас? </span>
         <a [routerLink]="['/signup']">Зарегестрируйтесь!</a>
       </p>
