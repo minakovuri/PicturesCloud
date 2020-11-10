@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../store/state';
+import {LoadRootContents} from '../../store/actions/contents.actions';
 
 @Component({
   selector: 'app-cloud-page',
@@ -7,9 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CloudPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.store.dispatch(new LoadRootContents())
   }
 
 }

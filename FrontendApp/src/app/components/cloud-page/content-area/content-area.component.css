@@ -1,0 +1,11 @@
+.content-area {
+  display: flex;
+  height: calc(100vh - var(--command-panel-height) - 30px);
+  padding: 0 30px 30px 0;
+}
+
+.contents-list {
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  border: 2px solid var(--border-color);
+}

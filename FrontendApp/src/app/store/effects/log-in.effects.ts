@@ -22,7 +22,10 @@ class LogInEffects {
       ofType<LogIn>(AuthActionTypes.LOGIN),
       exhaustMap(action =>
         this.authService.logIn(action.payload.login, action.payload.password).pipe(
-          map(response => new LogInSuccess({token: response.Token, user: response.User})),
+          map(response => new LogInSuccess({
+            token: response.token,
+            user: response.user
+          })),
           catchError(errorResponse => {
             const typedErrorResponse = errorResponse as HttpErrorResponse
             const errorMessage = typedErrorResponse.error.message
@@ -35,7 +38,8 @@ class LogInEffects {
             }
           })
         )
-    ))
+      )
+    )
   )
 
   logInSuccess$ = createEffect(() =>

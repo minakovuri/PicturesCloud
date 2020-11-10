@@ -1,0 +1,6 @@
+.cloud-page {
+  display: flex;
+
+  --sidebar-width: 200px;
+  --command-panel-height: 75px
+}

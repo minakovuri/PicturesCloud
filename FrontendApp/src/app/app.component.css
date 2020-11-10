@@ -3,6 +3,12 @@
   --destructive-color: red;
   --border-color: lightgrey;
   --header1-font: 25px/50px Roboto, "Helvetica Neue", sans-serif;
+  --header2-font: 20px/40px Roboto, "Helvetica Neue", sans-serif;
   --box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   --medium-font: 15px/30px Roboto, "Helvetica Neue", sans-serif
+}
+
+body {
+  height: 100%;
+  width: 100%;
 }

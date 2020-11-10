@@ -28,8 +28,8 @@ class SignUpEffects {
             const typedErrorResponse = errorResponse as HttpErrorResponse
             const errorMessage = typedErrorResponse.error.message
             switch (typedErrorResponse.status) {
-              case 404:
               case 400:
+              case 409:
                 return of(new SignUpFailure({errorMessage}))
               case 500:
                 return of(new InternalServerError({errorMessage}))

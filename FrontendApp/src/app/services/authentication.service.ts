@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 
 import {User} from '../models/User';
 
 interface LoginResponse {
-  readonly User: User,
-  readonly Token: string
+  readonly user: User,
+  readonly token: string
 }
 
 @Injectable()

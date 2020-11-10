@@ -1,0 +1,14 @@
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+}
+
+.logo {
+  width: 100%;
+  height: 70px;
+  background: aqua;
+}
+
+.tabs-list {
+  margin: 0 10px 0;
+}

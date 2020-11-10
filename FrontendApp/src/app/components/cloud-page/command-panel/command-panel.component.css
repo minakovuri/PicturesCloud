@@ -1,0 +1,23 @@
+.command-panel {
+  display: flex;
+  width: calc(100vw - var(--sidebar-width));
+  height: var(--command-panel-height);
+  justify-content: space-between;
+}
+
+.section-label {
+  display: flex;
+  align-items: flex-end;
+  margin: 0 0 10px 20px;
+  font: var(--header2-font);
+}
+
+.buttons-group {
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+}
+
+.command-panel-button {
+  margin-left: 15px;
+}
