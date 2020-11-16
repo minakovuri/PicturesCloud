@@ -18,6 +18,7 @@ import {SignUpEffects} from './store/effects/sign-up.effects';
 import {CloudPageModule} from './components/cloud-page/cloud-page.module';
 import {ContentManagementService} from './services/content-management.service';
 import {ContentEffects} from './store/effects/content.effects';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const effects = [
   LogInEffects,
@@ -40,6 +41,7 @@ const effects = [
     CloudPageModule,
     LoginPageModule,
     SignupPageModule,
+    NgbModule,
   ],
   providers: [
     AuthenticationService,

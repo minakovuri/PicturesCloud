@@ -1,5 +1,29 @@
 <div class="content-area">
-  <div class="contents-list">
-    <div *ngFor="let content of contentList">{{ content }}</div>
+  <div class="contents-table">
+    <div
+      *ngFor="let row of contents"
+      class="contents-row"
+    >
+      <div
+        *ngFor="let content of row"
+        [ngSwitch]="content.Type"
+        class="content-item"
+      >
+        <app-image-item
+          *ngSwitchCase="ContentTypes.Image"
+          [Id]="content.Id"
+          [Guid]="content.Guid"
+          [Name]="content.Name"
+          [FolderId]="content.FolderId"
+        ></app-image-item>
+        <app-folder-item
+          *ngSwitchCase="ContentTypes.Folder"
+          [Id]="content.Id"
+          [Guid]="content.Guid"
+          [Name]="content.Name"
+          [FolderId]="content.FolderId"
+        ></app-folder-item>
+      </div>
+    </div>
   </div>
 </div>

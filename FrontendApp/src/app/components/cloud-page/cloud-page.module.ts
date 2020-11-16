@@ -3,11 +3,14 @@ import {CommonModule} from '@angular/common';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {CloudPageComponent} from './cloud-page.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ContentAreaComponent } from './content-area/content-area.component';
 import { CommandPanelComponent } from './command-panel/command-panel.component';
+import { ImageItemComponent } from './content-area/image-item/image-item.component';
+import { FolderItemComponent } from './content-area/folder-item/folder-item.component';
 
 @NgModule({
   declarations: [
@@ -15,13 +18,16 @@ import { CommandPanelComponent } from './command-panel/command-panel.component';
     SidebarComponent,
     ContentAreaComponent,
     CommandPanelComponent,
+    ImageItemComponent,
+    FolderItemComponent,
   ],
-  imports: [
-    CommonModule,
-    MatListModule,
-    MatButtonModule,
-    MatIconModule
-  ],
+    imports: [
+        CommonModule,
+        MatListModule,
+        MatButtonModule,
+        MatIconModule,
+        NgbModule,
+    ],
   exports: [
     CloudPageComponent,
   ]

@@ -1,0 +1,22 @@
+<ng-template #contextMenuPopover>
+  <div class="context-menu-popover">
+    <div class="context-menu-item">Загрузить</div>
+    <div class="context-menu-item">Добавить в избранное</div>
+    <div class="context-menu-item">Предпросмотр</div>
+    <div class="context-menu-item">Переименовать</div>
+    <div class="context-menu-item">Удалить</div>
+  </div>
+</ng-template>
+
+<div class="image-item">
+  <div class="image-icon"></div>
+  <div class="image-item-panel">
+    <span class="image-name">{{ Name }}</span>
+    <div
+      class="popover-button"
+      [ngbPopover]="contextMenuPopover"
+      [autoClose]="'outside'"
+      placement="right"
+    ></div>
+  </div>
+</div>

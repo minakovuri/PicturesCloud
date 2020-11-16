@@ -1,0 +1,54 @@
+.image-item {
+  width: 100%;
+  height: 100%;
+}
+
+.image-icon {
+  margin: 20px auto;
+  width: 150px;
+  height: 150px;
+  background: url("src/assets/image-icon.svg") no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+
+.image-item-panel {
+  display: flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-top: 2px solid var(--border-color);
+}
+
+.image-name {
+  font-weight: 500;
+  font-family: var(--content-font-family);
+}
+
+.popover-button {
+  height: 20px;
+  width: 7px;
+  background: red;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.context-menu-popover {
+  border: 2px solid var(--border-color);
+  border-radius: 5px;
+  margin-left: 5px;
+  background: white;
+  box-shadow: var(--box-shadow);
+}
+
+.context-menu-item {
+  font-family: var(--content-font-family);
+  font-size: 20px;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 2px solid var(--border-color);
+  cursor: pointer;
+}
+
+.context-menu-item:hover {
+  background: var(--grey-hovered-color);
+}

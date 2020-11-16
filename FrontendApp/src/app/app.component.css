@@ -1,11 +1,17 @@
 :host {
   --primary-color: #3f51b5;
   --destructive-color: red;
+  --black-color: black;
+  --grey-hovered-color: #f3f3f3;
   --border-color: lightgrey;
-  --header1-font: 25px/50px Roboto, "Helvetica Neue", sans-serif;
-  --header2-font: 20px/40px Roboto, "Helvetica Neue", sans-serif;
+
+  --header-font-family: Roboto, "Helvetica Neue", sans-serif;
+  --content-font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  --header1-font: 25px/50px var(--header-font-family);
+  --header2-font: 20px/40px var(--header-font-family);
   --box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  --medium-font: 15px/30px Roboto, "Helvetica Neue", sans-serif
+  --medium-font: 15px/30px var(--content-font-family)
 }
 
 body {

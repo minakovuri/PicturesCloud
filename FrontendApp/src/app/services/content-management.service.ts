@@ -1,10 +1,37 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Content} from '../models/Content';
 import {Observable} from 'rxjs';
+import {Content} from '../models/Content';
+
+type ApiContent = {
+  readonly id: number
+  readonly guid: string
+  readonly name: string
+  readonly folderId: number|null
+  readonly type: number
+}
 
 interface GetContentsResponse {
-  readonly contents: Array<Content>
+  readonly contents: Array<ApiContent>
+}
+
+function mapApiContentDataToModelData(apiData: ApiContent): Content {
+  return {
+    Id: apiData.id,
+    Guid: apiData.guid,
+    Name: apiData.name,
+    FolderId: apiData.folderId,
+    Type: apiData.type,
+  }
+}
+
+function mapApiContentsDataToModelData(apiDataArray: ApiContent[]): Content[] {
+  return apiDataArray.map(apiData => mapApiContentDataToModelData(apiData))
+}
+
+const ApiDataToModelDataMappers = {
+  mapApiContentDataToModelData,
+  mapApiContentsDataToModelData,
 }
 
 @Injectable()
@@ -31,4 +58,5 @@ class ContentManagementService {
 
 export {
   ContentManagementService,
+  ApiDataToModelDataMappers,
 }

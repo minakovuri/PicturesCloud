@@ -6,7 +6,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {of} from 'rxjs';
 
 import {AddContents, ContentsActionTypes, LoadRootContents} from '../actions/contents.actions';
-import {ContentManagementService} from '../../services/content-management.service';
+import {ApiDataToModelDataMappers, ContentManagementService} from '../../services/content-management.service';
 import {InternalServerError} from '../actions/common.actions';
 
 @Injectable()
@@ -22,7 +22,9 @@ class ContentEffects {
       ofType<LoadRootContents>(ContentsActionTypes.LOAD_ROOT_CONTENTS),
       exhaustMap(action =>
         this.contentManagementService.getContents().pipe(
-          map(response => new AddContents({contents: response.contents})),
+          map(response => new AddContents({
+            contents: ApiDataToModelDataMappers.mapApiContentsDataToModelData(response.contents)
+          })),
           catchError(response => {
             if (response instanceof HttpErrorResponse) {
               const errorMessage = response.error.message
