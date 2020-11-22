@@ -32,14 +32,6 @@
   cursor: pointer;
 }
 
-.context-menu-popover {
-  border: 2px solid var(--border-color);
-  border-radius: 5px;
-  margin-left: 5px;
-  background: white;
-  box-shadow: var(--box-shadow);
-}
-
 .context-menu-item {
   font-family: var(--content-font-family);
   font-size: 20px;

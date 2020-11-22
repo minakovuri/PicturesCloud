@@ -20,12 +20,14 @@ import {CloudPageModule} from './components/cloud-page/cloud-page.module';
 import {ContentManagementService} from './services/content-management.service';
 import {ContentEffects} from './store/effects/content.effects';
 import {CommandPanelEffects} from './store/effects/command-panel.effects';
+import {ContentAreaEffects} from './store/effects/content-area.effects';
 
 const effects = [
   LogInEffects,
   SignUpEffects,
   ContentEffects,
   CommandPanelEffects,
+  ContentAreaEffects,
 ]
 
 @NgModule({

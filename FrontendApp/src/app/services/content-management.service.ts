@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Content} from '../models/Content';
 
@@ -90,6 +90,14 @@ class ContentManagementService {
   getContent(contentId: number): Observable<GetContentResponse> {
     const url = `${this.baseUrl}/content/${contentId}`
     return this.http.get<GetContentResponse>(url)
+  }
+
+  downloadImage(imageId: number): Observable<any> {
+    const url = `${this.baseUrl}/image/download/${imageId}`
+    const req = new HttpRequest( 'GET', url, {
+      responseType: 'blob'
+    });
+    return this.http.request(req);
   }
 }
 
