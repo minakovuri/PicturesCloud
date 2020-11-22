@@ -15,7 +15,6 @@ class TokenService implements HttpInterceptor {
     request = request.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
       }
     })
 

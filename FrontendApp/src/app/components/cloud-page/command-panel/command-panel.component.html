@@ -11,8 +11,17 @@
     <button
       mat-stroked-button
       class="command-panel-button"
+      (click)="imageInput.click()"
     >
       Загрузить
     </button>
+
+    <input
+      type="file"
+      accept=".png, .jpg, .jpeg"
+      style="display: none"
+      (change)="onFileInput($event)"
+      #imageInput
+    >
   </div>
 </div>

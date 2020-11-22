@@ -4,6 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {StoreModule} from '@ngrx/store';
 import {HttpClientModule} from '@angular/common/http';
 import {EffectsModule} from '@ngrx/effects';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,12 +19,13 @@ import {SignUpEffects} from './store/effects/sign-up.effects';
 import {CloudPageModule} from './components/cloud-page/cloud-page.module';
 import {ContentManagementService} from './services/content-management.service';
 import {ContentEffects} from './store/effects/content.effects';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {CommandPanelEffects} from './store/effects/command-panel.effects';
 
 const effects = [
   LogInEffects,
   SignUpEffects,
   ContentEffects,
+  CommandPanelEffects,
 ]
 
 @NgModule({

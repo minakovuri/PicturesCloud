@@ -11,6 +11,11 @@ const initialState: ContentsState = {
 
 function contentsReducer(state = initialState, action: ContentsAction): ContentsState {
   switch (action.type) {
+    case ContentsActionTypes.ADD_CONTENT: {
+      return {
+        contents: state.contents.concat(action.payload.content)
+      }
+    }
     case ContentsActionTypes.ADD_CONTENTS: {
       return {
         contents: [...action.payload.contents],
