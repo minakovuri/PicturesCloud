@@ -74,7 +74,6 @@ namespace WebApi.Repositories.ContentManagement
         public Content? GetContent(int id)
         {
             var entity = _dbContext.Contents
-                .Include(x => x.Folder)
                 .SingleOrDefault(x => x.Id == id);
             
             if (entity == null)
@@ -90,6 +89,9 @@ namespace WebApi.Repositories.ContentManagement
                 FolderId = entity.Folder == null
                     ? (int?) null
                     : entity.Folder.Id,
+                Type = entity.GetType() == typeof(Entities.Image)
+                    ? ContentType.Image
+                    : ContentType.Folder
             };
         }
 

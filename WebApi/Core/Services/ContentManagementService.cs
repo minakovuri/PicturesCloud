@@ -111,6 +111,16 @@ namespace WebApi.Core.Services
             _repository.DeleteContent(contentId);
         }
 
+        public Content GetContent(int contentId)
+        {
+            Content content = _repository.GetContent(contentId);
+            
+            if (content == null)
+                throw new ContentNotExistError("content doesn't exist");
+
+            return content;
+        }
+
         public List<Content> GetContents(int? folderId, int userId)
         {
             if (folderId != null && _repository.GetFolder(folderId.Value) == null)

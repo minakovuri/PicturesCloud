@@ -109,10 +109,34 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Route("api/content/{contentId}")]
-        public ActionResult<GetContentResponse> GetContent(string contentId)
+        public ActionResult<GetContentResponse> GetContent(int contentId)
         {
-            GetContentResponse response = new GetContentResponse();
-            return Ok(response);
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+                _service.CheckUserExists(userId);
+
+                var content = _service.GetContent(contentId);
+
+                GetContentResponse response = new GetContentResponse()
+                {
+                    Content = content
+                };
+
+                return Ok(response);
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (ContentNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
         }
         
         [HttpPost]
