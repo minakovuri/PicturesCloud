@@ -21,6 +21,7 @@ import {ContentManagementService} from './services/content-management.service';
 import {ContentEffects} from './store/effects/content.effects';
 import {CommandPanelEffects} from './store/effects/command-panel.effects';
 import {ContentAreaEffects} from './store/effects/content-area.effects';
+import {SelectionEffects} from './store/effects/selection.effects';
 
 const effects = [
   LogInEffects,
@@ -28,6 +29,7 @@ const effects = [
   ContentEffects,
   CommandPanelEffects,
   ContentAreaEffects,
+  SelectionEffects,
 ]
 
 @NgModule({

@@ -9,10 +9,7 @@ class DownloadImage implements Action {
   constructor(public payload: { imageId: number, imageName: string }) {}
 }
 
-type ContentAreaAction = DownloadImage
-
 export {
   ContentAreaActionTypes,
   DownloadImage,
-  ContentAreaAction,
 }

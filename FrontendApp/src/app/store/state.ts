@@ -4,6 +4,7 @@ import {logInReducer, LogInState} from './reducers/log-in.reducer';
 import {signUpReducer, SignUpState} from './reducers/sign-up.reducer';
 import {contentsReducer, ContentsState} from './reducers/content.reducer';
 import {commandPanelReducer, CommandPanelState} from './reducers/command-panel.reducer';
+import {selectionReducer, SelectionState} from './reducers/selection.reducer';
 
 interface AppState {
   authState: AuthState; // domainModel
@@ -11,6 +12,7 @@ interface AppState {
   signUpState: SignUpState, // viewModel
   contentsState: ContentsState, // domainModel
   commandPanel: CommandPanelState, // viewModel
+  selectionState: SelectionState, // viewModel
 }
 
 const reducers: ActionReducerMap<AppState> = {
@@ -19,6 +21,7 @@ const reducers: ActionReducerMap<AppState> = {
   signUpState: signUpReducer,
   contentsState: contentsReducer,
   commandPanel: commandPanelReducer,
+  selectionState: selectionReducer,
 }
 
 export {

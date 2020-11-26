@@ -1,4 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../../store/state';
+import {OpenFolder} from '../../../../store/actions/view-model/selection.actions';
 
 @Component({
   selector: 'app-folder-item',
@@ -11,9 +14,24 @@ export class FolderItemComponent implements OnInit {
   @Input() Name: string
   @Input() FolderId: number|null
 
-  constructor() { }
+  constructor(private store: Store<AppState>) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  preventClick(event): void {
+    event.preventDefault()
+  }
+
+  openFolder(event): void {
+    if (event.defaultPrevented)
+    {
+      return
+    }
+
+    this.store.dispatch(new OpenFolder({
+      folderID: this.Id,
+      folderName: this.Name,
+    }))
   }
 
 }

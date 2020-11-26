@@ -1,6 +1,12 @@
-<div class="folder-item">
+<div
+  class="folder-item"
+  (dblclick)="openFolder($event)"
+>
   <div class="folder-icon"></div>
-  <div class="folder-item-panel">
+  <div
+    class="folder-item-panel"
+    (dblclick)="$event.preventDefault()"
+  >
     <span class="folder-name">{{ Name }}</span>
   </div>
 </div>

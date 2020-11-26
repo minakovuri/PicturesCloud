@@ -54,7 +54,7 @@ class ContentManagementService {
 
   constructor(private http: HttpClient) {}
 
-  getContents(): Observable<GetContentsResponse> {
+  getRootContents(): Observable<GetContentsResponse> {
     const url = `${this.baseUrl}/contents`
     return this.http.get<GetContentsResponse>(url)
   }
