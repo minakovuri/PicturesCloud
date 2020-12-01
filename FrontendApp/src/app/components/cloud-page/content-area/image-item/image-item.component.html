@@ -4,7 +4,10 @@
     (click)="onDownloadButtonClick()"
   >Загрузить</div>
   <div class="context-menu-item">Добавить в избранное</div>
-  <div class="context-menu-item">Предпросмотр</div>
+  <div
+    class="context-menu-item"
+    (click)="onPreviewButtonClick()"
+  >Предпросмотр</div>
   <div class="context-menu-item">Переименовать</div>
   <div class="context-menu-item">Удалить</div>
 </ng-template>
@@ -16,7 +19,6 @@
     <div
       class="popover-button"
       [ngbPopover]="contextMenuPopover"
-      [autoClose]="'outside'"
       placement="right"
     ></div>
   </div>

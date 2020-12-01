@@ -172,6 +172,35 @@ namespace WebApi.Repositories.ContentManagement
             return images.Concat(folders).ToList();
         }
 
+        public List<Content> GetStarredContents(int userId)
+        {
+            var user = _dbContext.Users.SingleOrDefault(x => x.Id == userId);
+            
+            var entitiesList = _dbContext.Images
+                .Where(x => x.User == user && x.Starred);
+            
+            var contents = new List<Content>();
+
+            foreach (var entity in entitiesList)
+            {
+                Content image = new Image
+                {
+                    Id = entity.Id,
+                    Name = entity.Name,
+                    Guid = entity.Guid,
+                    FolderId = null,
+                    Type = ContentType.Image,
+                    UserId = entity.User.Id,
+                    Path = entity.Path,
+                    Starred = entity.Starred
+                };
+                
+                contents.Add(image);
+            }
+
+            return contents;
+        }
+
         private List<Content> GetFolders(int? parentFolderId, int userId)
         {
             var user = _dbContext.Users.SingleOrDefault(x => x.Id == userId);

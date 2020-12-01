@@ -240,8 +240,56 @@ namespace WebApi.Controllers
         [Route("api/contents/starred")]
         public ActionResult<GetContentsResponse> GetStarredContents()
         {
-            GetContentsResponse response = new GetContentsResponse();
-            return Ok(response);
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+                _service.CheckUserExists(userId);
+
+                var contents = _service.GetStarredContents(userId);
+
+                return Ok(new GetContentsResponse()
+                {
+                    Contents = contents.ToArray(),
+                });
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
+        }
+
+        [HttpGet]
+        [Route("api/image/preview/{imageId}")]
+        public ActionResult<PreviewImageResponse> PreviewImage(int imageId)
+        {
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+                _service.CheckUserExists(userId);
+
+                Image image = _service.GetImage(imageId);
+
+                return Ok(new PreviewImageResponse()
+                {
+                    PreviewUrl = image.Path
+                });
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (ContentNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
         }
 
         [HttpGet]

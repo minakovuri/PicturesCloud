@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 
 import {User} from '../models/User';
+import {environment} from '../../environments/environment';
 
 interface LoginResponse {
   readonly user: User,
@@ -11,12 +12,7 @@ interface LoginResponse {
 
 @Injectable()
 class AuthenticationService {
-  private protocol = 'https'
-  private host = 'localhost'
-  private port = 5001
-  private urlPrefix = 'api/user'
-
-  private baseUrl = `${this.protocol}://${this.host}:${this.port}/${this.urlPrefix}`
+  private baseUrl = `${environment.backendConfig.protocol}://${environment.backendConfig.host}:${environment.backendConfig.port}/api`
 
   constructor(private http: HttpClient) {}
 

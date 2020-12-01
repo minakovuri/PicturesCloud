@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/state';
 import {DownloadImage} from '../../../../store/actions/view-model/content-area.actions';
+import {LoadPreviewImage} from '../../../../store/actions/view-model/image-preview.actions';
 
 @Component({
   selector: 'app-image-item',
@@ -14,7 +15,15 @@ export class ImageItemComponent implements OnInit {
   @Input() Name: string
   @Input() FolderId: number|null
 
-  constructor(private store: Store<AppState>) { }
+  constructor(
+    private store: Store<AppState>,
+  ) {}
+
+  onPreviewButtonClick(): void {
+    this.store.dispatch(new LoadPreviewImage({
+      imageId: this.Id,
+    }))
+  }
 
   onDownloadButtonClick(): void {
     this.store.dispatch(new DownloadImage({

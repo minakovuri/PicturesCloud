@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpEvent, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Content} from '../models/Content';
+import {environment} from '../../environments/environment';
 
 type ApiContent = {
   readonly id: number
@@ -22,6 +23,10 @@ interface GetContentResponse {
 interface AddImageResponse {
   readonly contentId: number
   readonly uploadUrl: string
+}
+
+interface PreviewImageResponse {
+  readonly previewUrl: string
 }
 
 function mapApiContentDataToModelData(apiData: ApiContent): Content {
@@ -45,12 +50,7 @@ const ApiDataToModelDataMappers = {
 
 @Injectable()
 class ContentManagementService {
-  private protocol = 'https'
-  private host = 'localhost'
-  private port = 5001
-  private apiPrefix = 'api'
-
-  private baseUrl = `${this.protocol}://${this.host}:${this.port}/${this.apiPrefix}`
+  private baseUrl = `${environment.backendConfig.protocol}://${environment.backendConfig.host}:${environment.backendConfig.port}/api`
 
   constructor(private http: HttpClient) {}
 
@@ -85,6 +85,11 @@ class ContentManagementService {
       url,
       formData,
     )
+  }
+
+  previewImage(imageId: number): Observable<PreviewImageResponse> {
+    const url = `${this.baseUrl}/image/preview/${imageId}`
+    return this.http.get<PreviewImageResponse>(url)
   }
 
   getContent(contentId: number): Observable<GetContentResponse> {

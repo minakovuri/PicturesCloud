@@ -11,6 +11,7 @@ import { ContentAreaComponent } from './content-area/content-area.component';
 import { CommandPanelComponent } from './command-panel/command-panel.component';
 import { ImageItemComponent } from './content-area/image-item/image-item.component';
 import { FolderItemComponent } from './content-area/folder-item/folder-item.component';
+import { PreviewModalComponent } from './content-area/preview-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FolderItemComponent } from './content-area/folder-item/folder-item.comp
     CommandPanelComponent,
     ImageItemComponent,
     FolderItemComponent,
+    PreviewModalComponent,
   ],
     imports: [
         CommonModule,

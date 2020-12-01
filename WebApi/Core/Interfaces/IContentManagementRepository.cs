@@ -20,5 +20,7 @@ namespace WebApi.Core.Interfaces
         public User? GetUser(int id);
 
         public List<Content> GetContents(int? folderId, int userId);
+
+        public List<Content> GetStarredContents(int userId);
     }
 }

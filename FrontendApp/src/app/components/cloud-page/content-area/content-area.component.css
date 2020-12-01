@@ -33,3 +33,10 @@
 .content-item:first-child {
   margin-left: 0;
 }
+
+.image-preview {
+  margin-left: 50%;
+  transform: translateX(-50%);
+  max-width: 1200px;
+  max-height: 800px;
+}

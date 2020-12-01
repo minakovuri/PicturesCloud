@@ -129,6 +129,11 @@ namespace WebApi.Core.Services
             return _repository.GetContents(folderId, userId);
         }
 
+        public List<Content> GetStarredContents(int userId)
+        {
+            return _repository.GetStarredContents(userId);
+        }
+
         private string GetRootContentPath(string contentName, User user)
         {
             return "/" + user.Guid + "/" + contentName;
