@@ -1,6 +1,6 @@
 .image-item {
+  position: relative;
   width: 100%;
-  height: 100%;
 }
 
 .image-icon {
@@ -10,6 +10,16 @@
   background: url("src/assets/image-icon.svg") no-repeat;
   background-size: contain;
   cursor: pointer;
+}
+
+.starred-icon {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  left: 10px;
+  bottom: 35px;
+  background: url("src/assets/star.svg") no-repeat;
+  background-size: contain;
 }
 
 .image-item-panel {
@@ -33,6 +43,7 @@
 }
 
 .context-menu-item {
+  white-space: nowrap;
   font-family: var(--content-font-family);
   font-size: 20px;
   padding: 10px;

@@ -13,6 +13,8 @@ namespace WebApi.Core.Interfaces
 
         public void RenameContent(int id, string newName);
 
+        public void SetImageStarred(int id, bool starred);
+
         public Content? GetContent(int id);
 
         public Image? GetImage(int id);

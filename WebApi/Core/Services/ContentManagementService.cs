@@ -146,6 +146,14 @@ namespace WebApi.Core.Services
             return _repository.GetContents(folderId, userId);
         }
 
+        public void SetImageStarred(int imageId, bool starred)
+        {
+            if (_repository.GetContent(imageId) == null)
+                throw new ContentNotExistError("cannot find content");
+            
+            _repository.SetImageStarred(imageId, starred);
+        }
+
         public List<Content> GetStarredContents(int userId)
         {
             return _repository.GetStarredContents(userId);

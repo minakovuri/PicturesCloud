@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/state';
-import {DeleteContent, DownloadImage} from '../../../../store/actions/view-model/content-area.actions';
+import {ChangeImageStarred, DeleteContent, DownloadImage} from '../../../../store/actions/view-model/content-area.actions';
 import {PreviewImage} from '../../../../store/actions/view-model/content-area.actions';
 import {OpenPopup} from '../../../../store/actions/view-model/rename-content-popup.actions';
 
@@ -12,9 +12,9 @@ import {OpenPopup} from '../../../../store/actions/view-model/rename-content-pop
 })
 export class ImageItemComponent implements OnInit {
   @Input() Id: number
-  @Input() Guid: string
   @Input() Name: string
   @Input() FolderId: number|null
+  @Input() Starred: boolean
 
   constructor(
     private store: Store<AppState>,
@@ -30,6 +30,13 @@ export class ImageItemComponent implements OnInit {
     this.store.dispatch(new OpenPopup({
       currentName: this.Name,
       contentId: this.Id,
+    }))
+  }
+
+  onChangeStarred(): void {
+    this.store.dispatch(new ChangeImageStarred({
+      imageId: this.Id,
+      starred: !this.Starred,
     }))
   }
 

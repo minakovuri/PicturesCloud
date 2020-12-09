@@ -11,12 +11,12 @@ import {
   ContentAreaActionTypes,
   PreviewImage,
   DownloadImage,
-  DeleteContent,
+  DeleteContent, ChangeImageStarred,
 } from '../actions/view-model/content-area.actions';
 import {ImagePreviewActionTypes, SetPreviewImage} from '../actions/view-model/image-preview.actions';
 import {InternalServerError} from '../actions/common.actions';
 import {environment} from '../../../environments/environment';
-import {RemoveContent} from '../actions/contents.actions';
+import {RemoveContent, SetImageStarred} from '../actions/contents.actions';
 
 const fileStorageUrl = `${environment.fileStorageConfig.protocol}://${environment.fileStorageConfig.host}:${environment.fileStorageConfig.port}`
 
@@ -62,8 +62,28 @@ class ContentAreaEffects {
       ofType<DeleteContent>(ContentAreaActionTypes.DELETE_CONTENT),
       exhaustMap(action =>
         this.contentManagementService.deleteContent(action.payload.contentId).pipe(
-          map(response => new RemoveContent({
+          map(() => new RemoveContent({
             contentId: action.payload.contentId
+          })),
+          catchError(response => {
+            if (response instanceof HttpErrorResponse) {
+              const errorMessage = response.error.message
+              return of(new InternalServerError({errorMessage}))
+            }
+          })
+        )
+      )
+    )
+  )
+
+  changeImageStarred$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<ChangeImageStarred>(ContentAreaActionTypes.CHANGE_IMAGE_STARRED),
+      exhaustMap(action =>
+        this.contentManagementService.changeImageStarred(action.payload.imageId, action.payload.starred).pipe(
+          map(() => new SetImageStarred({
+            imageId: action.payload.imageId,
+            starred: action.payload.starred,
           })),
           catchError(response => {
             if (response instanceof HttpErrorResponse) {

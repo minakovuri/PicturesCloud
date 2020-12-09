@@ -9,6 +9,18 @@ const initialState: ContentsState = {
   contents: [],
 }
 
+function _updateContent(contentId: number, contents: Content[], content: Content): Content[] {
+  const updatedContentIndex = contents.findIndex(x => x.Id === contentId)
+  const itemsBeforeUpdatedContent = contents.slice(0, updatedContentIndex)
+  const itemsAfterUpdatedContent = contents.slice(updatedContentIndex + 1)
+
+  return [
+    ...itemsBeforeUpdatedContent,
+    content,
+    ...itemsAfterUpdatedContent,
+  ]
+}
+
 function contentsReducer(state = initialState, action: ContentsAction): ContentsState {
   switch (action.type) {
     case ContentsActionTypes.ADD_CONTENT: {
@@ -33,16 +45,19 @@ function contentsReducer(state = initialState, action: ContentsAction): Contents
         Name: action.payload.newName,
       }
 
-      const updatedContentIndex = state.contents.findIndex(x => x.Id === action.payload.contentId)
-      const itemsBeforeUpdatedContent = state.contents.slice(0, updatedContentIndex)
-      const itemsAfterUpdatedContent = state.contents.slice(updatedContentIndex + 1)
+      return {
+        contents: _updateContent(action.payload.contentId, state.contents, updatedContent)
+      }
+    }
+    case ContentsActionTypes.SET_IMAGE_STARRED: {
+      const content = state.contents.find(x => x.Id === action.payload.imageId)
+      const updatedContent = {
+        ...content,
+        Starred: action.payload.starred,
+      }
 
       return {
-        contents: [
-          ...itemsBeforeUpdatedContent,
-          updatedContent,
-          ...itemsAfterUpdatedContent,
-        ]
+        contents: _updateContent(action.payload.imageId, state.contents, updatedContent)
       }
     }
     default: {

@@ -147,7 +147,7 @@ namespace WebApi.Controllers
 
                 GetContentResponse response = new GetContentResponse()
                 {
-                    Content = content
+                    Content = ApiContentMapper.MapContentData(content)
                 };
 
                 return Ok(response);
@@ -197,10 +197,30 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("api/content/starred")]
-        public IActionResult AddToStarred([FromBody] AddToStarredRequest request)
+        [Route("api/image/starred")]
+        public IActionResult ChangeImageStarred([FromBody] ChangeImageStarredRequest request)
         {
-            return Ok();
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+                _service.CheckUserExists(userId);
+                
+                _service.SetImageStarred(request.ImageId, request.Starred);
+
+                return Ok();
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (ContentNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
         }
 
         [HttpGet]
@@ -216,7 +236,7 @@ namespace WebApi.Controllers
 
                 return Ok(new GetContentsResponse()
                 {
-                    Contents = contents.ToArray(),
+                    Contents = ApiContentMapper.MapContentsData(contents.ToArray()),
                 });
             }
             catch (UserNotExistError e)
@@ -246,7 +266,7 @@ namespace WebApi.Controllers
 
                 return Ok(new GetContentsResponse()
                 {
-                    Contents = contents.ToArray(),
+                    Contents = ApiContentMapper.MapContentsData(contents.ToArray()),
                 });
             }
             catch (UserNotExistError e)
@@ -276,7 +296,7 @@ namespace WebApi.Controllers
 
                 return Ok(new GetContentsResponse()
                 {
-                    Contents = contents.ToArray(),
+                    Contents = ApiContentMapper.MapContentsData(contents.ToArray()),
                 });
             }
             catch (UserNotExistError e)

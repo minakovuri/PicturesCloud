@@ -7,7 +7,8 @@ enum ContentsActionTypes {
   ADD_CONTENTS = '[Contents] Add Contents',
   ADD_CONTENT = '[Contents] Add Content',
   REMOVE_CONTENT = '[Contents] Remove Content',
-  UPDATE_CONTENT_NAME = '[Contents] Update Content Name'
+  UPDATE_CONTENT_NAME = '[Contents] Update Content Name',
+  SET_IMAGE_STARRED = '[Contents] Set Image Starred',
 }
 
 // возможно этот action стоит вынести в другое место - он не относится к доменным операциям, это операция viewModel-и
@@ -42,12 +43,18 @@ class UpdateContentName implements Action {
   constructor(public payload: { contentId: number, newName: string }) {}
 }
 
+class SetImageStarred implements Action {
+  readonly type = ContentsActionTypes.SET_IMAGE_STARRED
+  constructor(public payload: { imageId: number, starred: boolean }) {}
+}
+
 type ContentsAction = LoadRootContents
   | LoadFolderContents
   | AddContents
   | AddContent
   | RemoveContent
   | UpdateContentName
+  | SetImageStarred
 
 export {
   LoadRootContents,
@@ -56,6 +63,7 @@ export {
   AddContent,
   RemoveContent,
   UpdateContentName,
+  SetImageStarred,
   ContentsActionTypes,
   ContentsAction,
 }

@@ -3,7 +3,12 @@
     class="context-menu-item"
     (click)="onDownloadButtonClick()"
   >Загрузить</div>
-  <div class="context-menu-item">Добавить в избранное</div>
+  <div
+    class="context-menu-item"
+    (click)="onChangeStarred()"
+  >
+    {{!!Starred ? 'Удалить из избранного' : 'Добавить в избранное'}}
+  </div>
   <div
     class="context-menu-item"
     (click)="onPreviewButtonClick()"
@@ -23,6 +28,10 @@
   (dblclick)="onPreviewButtonClick()"
 >
   <div class="image-icon"></div>
+  <div
+    *ngIf="!!Starred"
+    class="starred-icon"
+  ></div>
   <div
     class="image-item-panel"
     (dblclick)="$event.preventDefault()"

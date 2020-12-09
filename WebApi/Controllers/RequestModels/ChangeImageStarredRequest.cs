@@ -2,11 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Controllers.RequestModels
 {
-    public class AddToStarredRequest
+    public class ChangeImageStarredRequest
     {
         [Required]
-        public string ContentId { get; set; }
-        
+        public int ImageId { get; set; }
+
         [Required]
         public bool Starred { get; set; }
     }

@@ -80,6 +80,15 @@ namespace WebApi.Repositories.ContentManagement
             _dbContext.SaveChanges();
         }
 
+        public void SetImageStarred(int id, bool starred)
+        {
+            var entity = _dbContext.Images
+                .SingleOrDefault(x => x.Id == id);
+
+            entity.Starred = starred;
+            _dbContext.SaveChanges();
+        }
+
         public Content? GetContent(int id)
         {
             var entity = _dbContext.Contents

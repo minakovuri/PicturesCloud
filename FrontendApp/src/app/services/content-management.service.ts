@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpRequest} from '@angular/common/http';
+import {HttpClient, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Content} from '../models/Content';
 import {environment} from '../../environments/environment';
 
 type ApiContent = {
   readonly id: number
-  readonly guid: string
   readonly name: string
   readonly folderId: number|null
   readonly type: number
+  readonly starred: boolean|null
 }
 
 interface GetContentsResponse {
@@ -36,10 +36,12 @@ interface PreviewImageResponse {
 function mapApiContentDataToModelData(apiData: ApiContent): Content {
   return {
     Id: apiData.id,
-    Guid: apiData.guid,
     Name: apiData.name,
     FolderId: apiData.folderId,
     Type: apiData.type,
+    Starred: apiData.starred === null
+      ? undefined
+      : apiData.starred
   }
 }
 
@@ -116,6 +118,16 @@ class ContentManagementService {
     const body = {
       contentId,
       newName,
+    }
+
+    return this.http.post<void>(url, body)
+  }
+
+  changeImageStarred(imageId: number, starred: boolean): Observable<void> {
+    const url = `${this.baseUrl}/image/starred`
+    const body = {
+      imageId,
+      starred,
     }
 
     return this.http.post<void>(url, body)

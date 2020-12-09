@@ -77,7 +77,9 @@ export class CommandPanelComponent implements OnInit {
 
     this.store.dispatch(new AddImage({
       file,
-      folderId: this.currentFolder.id,
+      folderId: this.currentFolder
+        ? this.currentFolder.id
+        : null
     }))
   }
 

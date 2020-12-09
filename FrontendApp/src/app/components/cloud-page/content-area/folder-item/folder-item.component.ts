@@ -12,7 +12,6 @@ import {OpenPopup} from '../../../../store/actions/view-model/rename-content-pop
 })
 export class FolderItemComponent implements OnInit {
   @Input() Id: number
-  @Input() Guid: string
   @Input() Name: string
   @Input() FolderId: number|null
 

@@ -3,7 +3,8 @@ import {Action} from '@ngrx/store';
 enum ContentAreaActionTypes {
   DOWNLOAD_IMAGE = '[Content Area] Download Image',
   PREVIEW_IMAGE = '[Content Area] Load Preview Image',
-  DELETE_CONTENT = '[Content Area] Delete Content'
+  DELETE_CONTENT = '[Content Area] Delete Content',
+  CHANGE_IMAGE_STARRED = '[Content Area] Change Image Starred'
 }
 
 class PreviewImage implements Action {
@@ -21,9 +22,15 @@ class DeleteContent implements Action {
   constructor(public payload: { contentId: number}) {}
 }
 
+class ChangeImageStarred implements Action {
+  readonly type = ContentAreaActionTypes.CHANGE_IMAGE_STARRED
+  constructor(public payload: { imageId: number, starred: boolean}) {}
+}
+
 export {
   ContentAreaActionTypes,
   PreviewImage,
   DownloadImage,
   DeleteContent,
+  ChangeImageStarred,
 }
