@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {Store} from '@ngrx/store';
-import {catchError, exhaustMap, map, tap} from 'rxjs/operators';
+import {catchError, exhaustMap, map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 import {HttpErrorResponse, HttpEventType} from '@angular/common/http';
 import {of} from 'rxjs';
 
@@ -79,12 +79,18 @@ class ContentAreaEffects {
   changeImageStarred$ = createEffect(() =>
     this.actions$.pipe(
       ofType<ChangeImageStarred>(ContentAreaActionTypes.CHANGE_IMAGE_STARRED),
-      exhaustMap(action =>
+      withLatestFrom(this.store$.select(state => state.selectionState)),
+      switchMap(([action, selection]) =>
         this.contentManagementService.changeImageStarred(action.payload.imageId, action.payload.starred).pipe(
-          map(() => new SetImageStarred({
-            imageId: action.payload.imageId,
-            starred: action.payload.starred,
-          })),
+          map(() => selection.type === 'all'
+              ? new SetImageStarred({
+                  imageId: action.payload.imageId,
+                  starred: action.payload.starred,
+                })
+              : new RemoveContent({
+                  contentId: action.payload.imageId
+                }),
+          ),
           catchError(response => {
             if (response instanceof HttpErrorResponse) {
               const errorMessage = response.error.message

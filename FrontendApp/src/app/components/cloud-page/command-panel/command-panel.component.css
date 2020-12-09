@@ -14,11 +14,12 @@
 }
 
 .back-button {
-  width: 30px;
-  height: 10px;
-  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+  margin: 0 10px 0 5px;
   cursor: pointer;
-  background-color: cadetblue;
+  background: url("src/assets/back-icon.svg") no-repeat;
+  background-size: contain;
 }
 
 .buttons-group {

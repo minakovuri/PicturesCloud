@@ -15,7 +15,7 @@
 .folder-item-panel {
   display: flex;
   align-items: center;
-  padding: 3px 10px;
+  padding: 3px 3px 3px 10px;
   border-top: 2px solid var(--border-color);
 }
 
@@ -25,9 +25,10 @@
 }
 
 .popover-button {
-  height: 20px;
-  width: 7px;
-  background: red;
+  height: 17px;
+  width: 17px;
+  background: url('src/assets/context-menu.svg') no-repeat;
+  background-size: contain;
   margin-left: auto;
   cursor: pointer;
 }

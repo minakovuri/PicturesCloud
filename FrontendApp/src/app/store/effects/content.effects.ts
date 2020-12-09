@@ -4,7 +4,7 @@ import {catchError, exhaustMap, map} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {of} from 'rxjs';
 
-import {AddContents, ContentsActionTypes, LoadFolderContents, LoadRootContents} from '../actions/contents.actions';
+import {AddContents, ContentsActionTypes, LoadFolderContents, LoadRootContents, LoadStarredContents} from '../actions/contents.actions';
 import {ApiDataToModelDataMappers, ContentManagementService} from '../../services/content-management.service';
 import {InternalServerError} from '../actions/common.actions';
 
@@ -33,6 +33,25 @@ class ContentEffects {
       )
     )
   )
+
+  loadStarredContents$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<LoadStarredContents>(ContentsActionTypes.LOAD_STARRED_CONTENTS),
+      exhaustMap(action =>
+        this.contentManagementService.getStarredContents().pipe(
+          map(response => new AddContents({
+            contents: ApiDataToModelDataMappers.mapApiContentsDataToModelData(response.contents)
+          })),
+          catchError(response => {
+            if (response instanceof HttpErrorResponse) {
+              const errorMessage = response.error.message
+              return of(new InternalServerError({errorMessage}))
+            }
+          })
+        )
+      )
+    )
+)
 
   loadFolderContents$ = createEffect(() =>
     this.actions$.pipe(

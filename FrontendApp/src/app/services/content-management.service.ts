@@ -65,6 +65,11 @@ class ContentManagementService {
     return this.http.get<GetContentsResponse>(url)
   }
 
+  getStarredContents(): Observable<GetContentsResponse> {
+    const url = `${this.baseUrl}/contents/starred`
+    return this.http.get<GetContentsResponse>(url)
+  }
+
   getFolderContents(folderID: number): Observable<GetContentsResponse> {
     const url = `${this.baseUrl}/contents/${folderID}`
     return this.http.get<GetContentsResponse>(url)

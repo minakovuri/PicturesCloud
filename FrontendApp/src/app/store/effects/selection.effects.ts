@@ -2,8 +2,8 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 
-import {LoadFolderContents, LoadRootContents} from '../actions/contents.actions';
-import {OpenAllMaterials, OpenFolder, SelectionActionTypes} from '../actions/view-model/selection.actions';
+import {LoadFolderContents, LoadRootContents, LoadStarredContents} from '../actions/contents.actions';
+import {OpenAllMaterials, OpenFavourites, OpenFolder, SelectionActionTypes} from '../actions/view-model/selection.actions';
 
 @Injectable()
 class SelectionEffects {
@@ -22,6 +22,13 @@ class SelectionEffects {
     this.actions$.pipe(
       ofType<OpenAllMaterials>(SelectionActionTypes.OPEN_ALL_MATERIALS),
       map(() => new LoadRootContents())
+    )
+  )
+
+  openFavourites$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<OpenFavourites>(SelectionActionTypes.OPEN_FAVOURITES),
+      map(() => new LoadStarredContents())
     )
   )
 }

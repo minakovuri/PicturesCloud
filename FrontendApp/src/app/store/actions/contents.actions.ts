@@ -4,6 +4,7 @@ import {Content} from '../../models/Content';
 enum ContentsActionTypes {
   LOAD_ROOT_CONTENTS = '[Contents] Load Root Contents',
   LOAD_FOLDER_CONTENTS = '[Contents] Load Folder Contents',
+  LOAD_STARRED_CONTENTS = '[Contents] Load Starred Contents',
   ADD_CONTENTS = '[Contents] Add Contents',
   ADD_CONTENT = '[Contents] Add Content',
   REMOVE_CONTENT = '[Contents] Remove Content',
@@ -14,6 +15,12 @@ enum ContentsActionTypes {
 // возможно этот action стоит вынести в другое место - он не относится к доменным операциям, это операция viewModel-и
 class LoadRootContents implements Action {
   readonly type = ContentsActionTypes.LOAD_ROOT_CONTENTS
+  constructor() {}
+}
+
+// возможно этот action стоит вынести в другое место - он не относится к доменным операциям, это операция viewModel-и
+class LoadStarredContents implements Action  {
+  readonly type = ContentsActionTypes.LOAD_STARRED_CONTENTS
   constructor() {}
 }
 
@@ -50,6 +57,7 @@ class SetImageStarred implements Action {
 
 type ContentsAction = LoadRootContents
   | LoadFolderContents
+  | LoadStarredContents
   | AddContents
   | AddContent
   | RemoveContent
@@ -59,6 +67,7 @@ type ContentsAction = LoadRootContents
 export {
   LoadRootContents,
   LoadFolderContents,
+  LoadStarredContents,
   AddContents,
   AddContent,
   RemoveContent,
