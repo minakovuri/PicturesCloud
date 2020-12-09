@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/state';
 import {OpenFolder} from '../../../../store/actions/view-model/selection.actions';
+import {DeleteContent} from '../../../../store/actions/view-model/content-area.actions';
 
 @Component({
   selector: 'app-folder-item',
@@ -18,8 +19,10 @@ export class FolderItemComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  preventClick(event): void {
-    event.preventDefault()
+  onDeleteFolder(): void {
+    this.store.dispatch(new DeleteContent({
+      contentId: this.Id,
+    }))
   }
 
   openFolder(event): void {

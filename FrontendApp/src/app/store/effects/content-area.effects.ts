@@ -1,15 +1,24 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {Store} from '@ngrx/store';
-import {exhaustMap, tap} from 'rxjs/operators';
-import {HttpEventType} from '@angular/common/http';
+import {catchError, exhaustMap, map, tap} from 'rxjs/operators';
+import {HttpErrorResponse, HttpEventType} from '@angular/common/http';
+import {of} from 'rxjs';
 
 import {AppState} from '../state';
 import {ContentManagementService} from '../../services/content-management.service';
 import {
   ContentAreaActionTypes,
+  PreviewImage,
   DownloadImage,
+  DeleteContent,
 } from '../actions/view-model/content-area.actions';
+import {ImagePreviewActionTypes, SetPreviewImage} from '../actions/view-model/image-preview.actions';
+import {InternalServerError} from '../actions/common.actions';
+import {environment} from '../../../environments/environment';
+import {RemoveContent} from '../actions/contents.actions';
+
+const fileStorageUrl = `${environment.fileStorageConfig.protocol}://${environment.fileStorageConfig.host}:${environment.fileStorageConfig.port}`
 
 function downloadBlobAsFile(blob: Blob, name: string): void {
   const a = document.createElement('a')
@@ -28,6 +37,44 @@ class ContentAreaEffects {
     private store$: Store<AppState>,
     private contentManagementService: ContentManagementService,
   ) {}
+
+  loadImagePreview$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<PreviewImage>(ImagePreviewActionTypes.LOAD_PREVIEW_IMAGE),
+      exhaustMap(action =>
+        this.contentManagementService.previewImage(action.payload.imageId).pipe(
+          map(response => new SetPreviewImage({
+            previewUrl: `${fileStorageUrl}/${response.previewUrl}`
+          })),
+          catchError(response => {
+            if (response instanceof HttpErrorResponse) {
+              const errorMessage = response.error.message
+              return of(new InternalServerError({errorMessage}))
+            }
+          })
+        )
+      )
+    )
+  )
+
+  deleteContent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<DeleteContent>(ContentAreaActionTypes.DELETE_CONTENT),
+      exhaustMap(action =>
+        this.contentManagementService.deleteContent(action.payload.contentId).pipe(
+          map(response => new RemoveContent({
+            contentId: action.payload.contentId
+          })),
+          catchError(response => {
+            if (response instanceof HttpErrorResponse) {
+              const errorMessage = response.error.message
+              return of(new InternalServerError({errorMessage}))
+            }
+          })
+        )
+      )
+    )
+  )
 
   downloadImage$ = createEffect(() =>
     this.actions$.pipe(

@@ -6,11 +6,6 @@ enum ImagePreviewActionTypes {
   RESET_PREVIEW_IMAGE = '[Content Area] Reset Preview Image'
 }
 
-class LoadPreviewImage implements Action {
-  readonly type = ImagePreviewActionTypes.LOAD_PREVIEW_IMAGE
-  constructor(public payload: { imageId: number }) {}
-}
-
 class SetPreviewImage implements Action {
   readonly type = ImagePreviewActionTypes.SET_PREVIEW_IMAGE
   constructor(public payload: { previewUrl: string }) {}
@@ -21,13 +16,11 @@ class ResetPreviewImage implements Action {
   constructor() {}
 }
 
-type ImagePreviewAction = LoadPreviewImage
-  | SetPreviewImage
+type ImagePreviewAction = SetPreviewImage
   | ResetPreviewImage
 
 export {
   ImagePreviewActionTypes,
-  LoadPreviewImage,
   SetPreviewImage,
   ImagePreviewAction,
 }

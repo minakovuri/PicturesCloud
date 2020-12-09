@@ -22,7 +22,7 @@ import {ContentEffects} from './store/effects/content.effects';
 import {CommandPanelEffects} from './store/effects/command-panel.effects';
 import {ContentAreaEffects} from './store/effects/content-area.effects';
 import {SelectionEffects} from './store/effects/selection.effects';
-import {ImagePreviewEffects} from './store/effects/image-preview.effects';
+import {CreateFolderPopupEffects} from './store/effects/create-folder-popup.effects';
 
 const effects = [
   LogInEffects,
@@ -31,7 +31,7 @@ const effects = [
   CommandPanelEffects,
   ContentAreaEffects,
   SelectionEffects,
-  ImagePreviewEffects,
+  CreateFolderPopupEffects,
 ]
 
 @NgModule({

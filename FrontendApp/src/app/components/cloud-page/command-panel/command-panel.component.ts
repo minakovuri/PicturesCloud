@@ -5,6 +5,7 @@ import {AddImage} from '../../../store/actions/view-model/command-panel.actions'
 import {selectionStateSelector} from '../../../store/selectors/selection.selectors';
 import {FolderState, SelectionState} from '../../../store/reducers/selection.reducer';
 import {OpenAllMaterials, OpenFolder} from '../../../store/actions/view-model/selection.actions';
+import {OpenPopup} from '../../../store/actions/view-model/create-folder-popup.actions';
 
 function getSectionTitle(selection: SelectionState): string {
   if (selection.type === 'favourites')
@@ -80,4 +81,7 @@ export class CommandPanelComponent implements OnInit {
     }))
   }
 
+  onOpenCreateFolderPopup(): void {
+    this.store.dispatch(new OpenPopup())
+  }
 }

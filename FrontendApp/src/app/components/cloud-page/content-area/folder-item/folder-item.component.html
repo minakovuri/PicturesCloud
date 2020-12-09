@@ -1,3 +1,11 @@
+<ng-template #contextMenuPopover>
+  <div class="context-menu-item">Переименовать</div>
+  <div
+    class="context-menu-item"
+    (click)="onDeleteFolder()"
+  >Удалить</div>
+</ng-template>
+
 <div
   class="folder-item"
   (dblclick)="openFolder($event)"
@@ -8,5 +16,10 @@
     (dblclick)="$event.preventDefault()"
   >
     <span class="folder-name">{{ Name }}</span>
+    <div
+      class="popover-button"
+      [ngbPopover]="contextMenuPopover"
+      placement="right"
+    ></div>
   </div>
 </div>

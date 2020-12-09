@@ -6,7 +6,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
   template: `
     <img class="image-preview" src="{{imageUrl}}">
   `,
-  styleUrls: ['./content-area.component.css']
+  styleUrls: ['./preview-modal.component.css']
 })
 export class PreviewModalComponent {
   @Input() imageUrl: string

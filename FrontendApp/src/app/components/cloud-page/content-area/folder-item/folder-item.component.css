@@ -13,6 +13,7 @@
 }
 
 .folder-item-panel {
+  display: flex;
   align-items: center;
   padding: 3px 10px;
   border-top: 2px solid var(--border-color);
@@ -21,4 +22,25 @@
 .folder-name {
   font-weight: 500;
   font-family: var(--content-font-family);
+}
+
+.popover-button {
+  height: 20px;
+  width: 7px;
+  background: red;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.context-menu-item {
+  font-family: var(--content-font-family);
+  font-size: 20px;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 2px solid var(--border-color);
+  cursor: pointer;
+}
+
+.context-menu-item:hover {
+  background: var(--grey-hovered-color);
 }

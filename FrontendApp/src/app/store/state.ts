@@ -6,6 +6,7 @@ import {contentsReducer, ContentsState} from './reducers/content.reducer';
 import {commandPanelReducer, CommandPanelState} from './reducers/command-panel.reducer';
 import {selectionReducer, SelectionState} from './reducers/selection.reducer';
 import {imagePreviewReducer, ImagePreviewState} from './reducers/image-preview.reducer';
+import {createFolderPopupReducer, CreateFolderPopupState} from './reducers/create-folder-popup.reducer';
 
 interface AppState {
   authState: AuthState; // domainModel
@@ -15,6 +16,7 @@ interface AppState {
   commandPanel: CommandPanelState, // viewModel
   selectionState: SelectionState, // viewModel
   imagePreviewState: ImagePreviewState, // viewModel
+  createFolderPopupState: CreateFolderPopupState, // viewModel
 }
 
 const reducers: ActionReducerMap<AppState> = {
@@ -25,6 +27,7 @@ const reducers: ActionReducerMap<AppState> = {
   commandPanel: commandPanelReducer,
   selectionState: selectionReducer,
   imagePreviewState: imagePreviewReducer,
+  createFolderPopupState: createFolderPopupReducer,
 }
 
 export {

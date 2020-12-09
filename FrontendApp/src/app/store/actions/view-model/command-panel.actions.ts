@@ -28,10 +28,16 @@ class ClearUploadedFileData implements Action {
   constructor() {}
 }
 
+class CreateFolder implements Action {
+  readonly type = CommandPanelActionTypes.CREATE_FOLDER
+  constructor() {}
+}
+
 type CommandPanelAction = AddImage
   | UploadImage
   | GetContent
   | ClearUploadedFileData
+  | CreateFolder
 
 export {
   AddImage,

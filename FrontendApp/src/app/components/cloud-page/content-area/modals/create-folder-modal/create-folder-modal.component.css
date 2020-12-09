@@ -1,0 +1,17 @@
+.modal-title {
+  margin-left: auto;
+  margin-bottom: 0;
+  font-weight: 500
+}
+
+.close:focus {
+
+}
+
+.form {
+  width: 100%;
+}
+
+.modal-footer {
+  justify-content: space-between;
+}

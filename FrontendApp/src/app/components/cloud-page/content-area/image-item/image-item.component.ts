@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/state';
-import {DownloadImage} from '../../../../store/actions/view-model/content-area.actions';
-import {LoadPreviewImage} from '../../../../store/actions/view-model/image-preview.actions';
+import {DeleteContent, DownloadImage} from '../../../../store/actions/view-model/content-area.actions';
+import {PreviewImage} from '../../../../store/actions/view-model/content-area.actions';
 
 @Component({
   selector: 'app-image-item',
@@ -20,7 +20,7 @@ export class ImageItemComponent implements OnInit {
   ) {}
 
   onPreviewButtonClick(): void {
-    this.store.dispatch(new LoadPreviewImage({
+    this.store.dispatch(new PreviewImage({
       imageId: this.Id,
     }))
   }
@@ -29,6 +29,12 @@ export class ImageItemComponent implements OnInit {
     this.store.dispatch(new DownloadImage({
       imageId: this.Id,
       imageName: this.Name,
+    }))
+  }
+
+  onDeleteImage(): void {
+    this.store.dispatch(new DeleteContent({
+      contentId: this.Id,
     }))
   }
 

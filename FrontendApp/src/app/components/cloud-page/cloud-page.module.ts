@@ -11,7 +11,11 @@ import { ContentAreaComponent } from './content-area/content-area.component';
 import { CommandPanelComponent } from './command-panel/command-panel.component';
 import { ImageItemComponent } from './content-area/image-item/image-item.component';
 import { FolderItemComponent } from './content-area/folder-item/folder-item.component';
-import { PreviewModalComponent } from './content-area/preview-modal.component';
+import { PreviewModalComponent } from './content-area/modals/preview-modal/preview-modal.component';
+import {CreateFolderModalComponent} from './content-area/modals/create-folder-modal/create-folder-modal.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,14 +26,18 @@ import { PreviewModalComponent } from './content-area/preview-modal.component';
     ImageItemComponent,
     FolderItemComponent,
     PreviewModalComponent,
+    CreateFolderModalComponent,
   ],
-    imports: [
-        CommonModule,
-        MatListModule,
-        MatButtonModule,
-        MatIconModule,
-        NgbModule,
-    ],
+  imports: [
+    CommonModule,
+    MatListModule,
+    MatButtonModule,
+    MatIconModule,
+    NgbModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+  ],
   exports: [
     CloudPageComponent,
   ]

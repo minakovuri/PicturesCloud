@@ -6,6 +6,7 @@ enum ContentsActionTypes {
   LOAD_FOLDER_CONTENTS = '[Contents] Load Folder Contents',
   ADD_CONTENTS = '[Contents] Add Contents',
   ADD_CONTENT = '[Contents] Add Content',
+  REMOVE_CONTENT = '[Contents] Remove Content'
 }
 
 // возможно этот action стоит вынести в другое место - он не относится к доменным операциям, это операция viewModel-и
@@ -30,16 +31,23 @@ class AddContents implements Action {
   constructor(public payload: { contents: Array<Content> }) {}
 }
 
+class RemoveContent implements Action {
+  readonly type = ContentsActionTypes.REMOVE_CONTENT
+  constructor(public payload: { contentId: number}) {}
+}
+
 type ContentsAction = LoadRootContents
   | LoadFolderContents
   | AddContents
   | AddContent
+  | RemoveContent
 
 export {
   LoadRootContents,
   LoadFolderContents,
   AddContents,
   AddContent,
+  RemoveContent,
   ContentsActionTypes,
   ContentsAction,
 }

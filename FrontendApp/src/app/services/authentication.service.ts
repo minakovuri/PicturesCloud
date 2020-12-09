@@ -12,7 +12,8 @@ interface LoginResponse {
 
 @Injectable()
 class AuthenticationService {
-  private baseUrl = `${environment.backendConfig.protocol}://${environment.backendConfig.host}:${environment.backendConfig.port}/api`
+  private urlPrefix = 'api/user'
+  private baseUrl = `${environment.backendConfig.protocol}://${environment.backendConfig.host}:${environment.backendConfig.port}/${this.urlPrefix}`
 
   constructor(private http: HttpClient) {}
 

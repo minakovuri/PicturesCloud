@@ -21,6 +21,11 @@ function contentsReducer(state = initialState, action: ContentsAction): Contents
         contents: [...action.payload.contents],
       }
     }
+    case ContentsActionTypes.REMOVE_CONTENT:  {
+      return {
+        contents: state.contents.filter(content => content.Id !== action.payload.contentId)
+      }
+    }
     default: {
       return state
     }

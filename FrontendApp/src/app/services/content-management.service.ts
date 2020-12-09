@@ -25,6 +25,10 @@ interface AddImageResponse {
   readonly uploadUrl: string
 }
 
+interface AddFolderResponse {
+  readonly folderId: number
+}
+
 interface PreviewImageResponse {
   readonly previewUrl: string
 }
@@ -74,6 +78,16 @@ class ContentManagementService {
     return this.http.post<AddImageResponse>(url, body)
   }
 
+  addFolder(folderName: string, parentFolderId: number|null): Observable<AddFolderResponse> {
+    const url = `${this.baseUrl}/folder`
+    const body = {
+      folderName,
+      parentFolderId,
+    }
+
+    return this.http.post<AddFolderResponse>(url, body)
+  }
+
   uploadImage(file: File, uploadUrl: string): Observable<any> {
     const url = `${this.baseUrl}/image/upload`
 
@@ -103,6 +117,11 @@ class ContentManagementService {
       responseType: 'blob'
     });
     return this.http.request(req);
+  }
+
+  deleteContent(contentId: number): Observable<void> {
+    const url = `${this.baseUrl}/content/${contentId}`
+    return this.http.delete<void>(url)
   }
 }
 

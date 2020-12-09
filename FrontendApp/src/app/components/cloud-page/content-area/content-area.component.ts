@@ -7,7 +7,9 @@ import {Content} from '../../../models/Content';
 import {contentsStateSelector} from '../../../store/selectors/content.selectors';
 import {ContentTypes} from '../../../models/ContentTypes';
 import {imagePreviewSelector} from '../../../store/selectors/image-preview.selectors';
-import {PreviewModalComponent} from './preview-modal.component';
+import {PreviewModalComponent} from './modals/preview-modal/preview-modal.component';
+import {createFolderPopupSelector} from '../../../store/selectors/create-folder-popup.selectors';
+import {CreateFolderModalComponent} from './modals/create-folder-modal/create-folder-modal.component';
 
 const ITEMS_IN_ROW_COUNT = 4
 
@@ -54,6 +56,17 @@ export class ContentAreaComponent implements OnInit {
             centered: true,
           })
           ref.componentInstance.imageUrl = imagePreviewState.previewUrl
+        }
+      })
+
+    this.store
+      .pipe(select(createFolderPopupSelector))
+      .subscribe((createFolderPopupState) => {
+        if (createFolderPopupState.showPopup)
+        {
+          this.modalService.open(CreateFolderModalComponent, {
+            centered: true,
+          })
         }
       })
   }
