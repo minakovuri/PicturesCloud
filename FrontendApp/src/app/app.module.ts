@@ -23,6 +23,7 @@ import {CommandPanelEffects} from './store/effects/command-panel.effects';
 import {ContentAreaEffects} from './store/effects/content-area.effects';
 import {SelectionEffects} from './store/effects/selection.effects';
 import {CreateFolderPopupEffects} from './store/effects/create-folder-popup.effects';
+import {RenameContentPopupEffects} from './store/effects/rename-content-popup.effects';
 
 const effects = [
   LogInEffects,
@@ -32,6 +33,7 @@ const effects = [
   ContentAreaEffects,
   SelectionEffects,
   CreateFolderPopupEffects,
+  RenameContentPopupEffects,
 ]
 
 @NgModule({

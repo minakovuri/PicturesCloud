@@ -71,6 +71,15 @@ namespace WebApi.Repositories.ContentManagement
             _dbContext.SaveChanges();
         }
 
+        public void RenameContent(int id, string newName)
+        {
+            var entity = _dbContext.Contents
+                .SingleOrDefault(x => x.Id == id);
+
+            entity.Name = newName;
+            _dbContext.SaveChanges();
+        }
+
         public Content? GetContent(int id)
         {
             var entity = _dbContext.Contents

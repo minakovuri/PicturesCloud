@@ -64,6 +64,14 @@ namespace WebApi.Core.Services
             return imageId;
         }
 
+        public void RenameContent(int contentId, string newName)
+        {
+            if (_repository.GetContent(contentId) == null)
+                throw new ContentNotExistError("cannot find removable content");
+
+            _repository.RenameContent(contentId, newName);
+        }
+
         public int AddFolder(string folderName, int? parentFolderId, int userId)
         {
             if (parentFolderId != null && _repository.GetFolder(parentFolderId.Value) == null)
@@ -97,17 +105,26 @@ namespace WebApi.Core.Services
             return _fileStorage.GetRootPath() + "/" + image.Path;
         }
 
-        public void DeleteContent(int contentId)
+        public void DeleteContent(int contentId, int userId)
         {
             if (_repository.GetContent(contentId) == null)
                 throw new ContentNotExistError("cannot find removable content");
     
-            var possibleImage = GetImage(contentId);
-            if (possibleImage != null)
+            Image image = _repository.GetImage(contentId);
+            if (image != null)
             {
-                _fileStorage.DeleteImage(possibleImage.Path);
+                _fileStorage.DeleteImage(image.Path);
             }
-            
+            else
+            {
+                List<Content> contents = GetContents(contentId, userId);
+
+                foreach (var content in contents)
+                {
+                    DeleteContent(content.Id, userId);
+                }
+            }
+
             _repository.DeleteContent(contentId);
         }
 

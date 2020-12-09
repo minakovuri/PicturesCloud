@@ -1,0 +1,41 @@
+<div class="modal-header">
+  <h4 class="modal-title">Переименовать</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="onClose()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form
+    class="example-form"
+    [formGroup]="form"
+  >
+    <mat-form-field class="form">
+      <mat-label>Новое название</mat-label>
+      <input
+        matInput
+        placeholder="Введите новое название..."
+        name="name"
+        formControlName="name"
+      >
+      <mat-error>
+        Пожалуйста, введите новое название
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    class="btn btn-outline-dark"
+    (click)="onClose()"
+  >Закрыть</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onAccept()"
+  >Переименовать</button>
+</div>

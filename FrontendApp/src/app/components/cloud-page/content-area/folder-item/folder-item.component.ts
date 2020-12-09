@@ -3,6 +3,7 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../../../store/state';
 import {OpenFolder} from '../../../../store/actions/view-model/selection.actions';
 import {DeleteContent} from '../../../../store/actions/view-model/content-area.actions';
+import {OpenPopup} from '../../../../store/actions/view-model/rename-content-popup.actions';
 
 @Component({
   selector: 'app-folder-item',
@@ -21,6 +22,13 @@ export class FolderItemComponent implements OnInit {
 
   onDeleteFolder(): void {
     this.store.dispatch(new DeleteContent({
+      contentId: this.Id,
+    }))
+  }
+
+  onRenameButtonClick(): void {
+    this.store.dispatch(new OpenPopup({
+      currentName: this.Name,
       contentId: this.Id,
     }))
   }

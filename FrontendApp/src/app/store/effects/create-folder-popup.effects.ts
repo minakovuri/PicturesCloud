@@ -4,7 +4,7 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../state';
 import {ContentManagementService} from '../../services/content-management.service';
 import {ClosePopup, CreateFolder, CreateFolderPopupActionTypes} from '../actions/view-model/create-folder-popup.actions';
-import {catchError, map, switchMap, withLatestFrom} from 'rxjs/operators';
+import {catchError, switchMap, withLatestFrom} from 'rxjs/operators';
 import {GetContent} from '../actions/view-model/command-panel.actions';
 import {HttpErrorResponse} from '@angular/common/http';
 import {of} from 'rxjs';

@@ -8,16 +8,25 @@
     class="context-menu-item"
     (click)="onPreviewButtonClick()"
   >Предпросмотр</div>
-  <div class="context-menu-item">Переименовать</div>
+  <div
+    class="context-menu-item"
+    (click)="onRenameButtonClick()"
+  >Переименовать</div>
   <div
     class="context-menu-item"
     (click)="onDeleteImage()"
   >Удалить</div>
 </ng-template>
 
-<div class="image-item">
+<div
+  class="image-item"
+  (dblclick)="onPreviewButtonClick()"
+>
   <div class="image-icon"></div>
-  <div class="image-item-panel">
+  <div
+    class="image-item-panel"
+    (dblclick)="$event.preventDefault()"
+  >
     <span class="image-name">{{ Name }}</span>
     <div
       class="popover-button"

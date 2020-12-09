@@ -111,6 +111,16 @@ class ContentManagementService {
     return this.http.get<GetContentResponse>(url)
   }
 
+  renameContent(contentId: number, newName: string): Observable<void> {
+    const url = `${this.baseUrl}/content/update`
+    const body = {
+      contentId,
+      newName,
+    }
+
+    return this.http.post<void>(url, body)
+  }
+
   downloadImage(imageId: number): Observable<any> {
     const url = `${this.baseUrl}/image/download/${imageId}`
     const req = new HttpRequest( 'GET', url, {

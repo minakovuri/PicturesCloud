@@ -1,5 +1,8 @@
 <ng-template #contextMenuPopover>
-  <div class="context-menu-item">Переименовать</div>
+  <div
+    class="context-menu-item"
+    (click)="onRenameButtonClick()"
+  >Переименовать</div>
   <div
     class="context-menu-item"
     (click)="onDeleteFolder()"

@@ -11,6 +11,8 @@ namespace WebApi.Core.Interfaces
 
         public void DeleteContent(int id);
 
+        public void RenameContent(int id, string newName);
+
         public Content? GetContent(int id);
 
         public Image? GetImage(int id);

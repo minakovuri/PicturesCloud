@@ -54,6 +54,33 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Route("api/content/update")]
+        public IActionResult RenameContent([FromBody] RenameContentRequest request)
+        {
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+                _service.CheckUserExists(userId);
+
+                _service.RenameContent(request.ContentId, request.NewName);
+
+                return Ok();
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (ContentNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
+        }
+
+        [HttpPost]
         [Route("api/image/upload")]
         public IActionResult UploadImage([FromForm] IFormFile image, [FromForm] string uploadUrl)
         {
@@ -89,7 +116,7 @@ namespace WebApi.Controllers
                 var userId = Int32.Parse(User.Identity.Name);
                 _service.CheckUserExists(userId);
                 
-                _service.DeleteContent(contentId);
+                _service.DeleteContent(contentId, userId);
 
                 return Ok();
             }

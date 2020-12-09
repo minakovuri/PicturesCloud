@@ -16,6 +16,7 @@ import {CreateFolderModalComponent} from './content-area/modals/create-folder-mo
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
+import { RenameContentModalComponent } from './content-area/modals/rename-content-modal/rename-content-modal.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     FolderItemComponent,
     PreviewModalComponent,
     CreateFolderModalComponent,
+    RenameContentModalComponent,
   ],
   imports: [
     CommonModule,
