@@ -1,9 +1,10 @@
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {map} from 'rxjs/operators';
+import {switchMap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 
-import {LoadFolderContents, LoadRootContents, LoadStarredContents} from '../actions/contents.actions';
+import {LoadFolderContents, LoadFoldersList, LoadRootContents, LoadStarredContents} from '../actions/contents.actions';
 import {OpenAllMaterials, OpenFavourites, OpenFolder, SelectionActionTypes} from '../actions/view-model/selection.actions';
+import {SetAllMaterialsItem, SetFavouritesItem} from '../actions/view-model/breadcrumbs.actions';
 
 @Injectable()
 class SelectionEffects {
@@ -14,21 +15,32 @@ class SelectionEffects {
   openFolder$ = createEffect(() =>
     this.actions$.pipe(
       ofType<OpenFolder>(SelectionActionTypes.OPEN_FOLDER),
-      map(({payload}) => new LoadFolderContents(payload))
+      switchMap(({payload}) => [
+        new LoadFolderContents(payload),
+        new LoadFoldersList({
+          folderID: payload.folderID,
+        })
+      ])
     )
   )
 
   openAllMaterials$ = createEffect(() =>
     this.actions$.pipe(
       ofType<OpenAllMaterials>(SelectionActionTypes.OPEN_ALL_MATERIALS),
-      map(() => new LoadRootContents())
+      switchMap(() => [
+        new LoadRootContents(),
+        new SetAllMaterialsItem(),
+      ])
     )
   )
 
   openFavourites$ = createEffect(() =>
     this.actions$.pipe(
       ofType<OpenFavourites>(SelectionActionTypes.OPEN_FAVOURITES),
-      map(() => new LoadStarredContents())
+      switchMap(() => [
+        new LoadStarredContents(),
+        new SetFavouritesItem(),
+      ])
     )
   )
 }

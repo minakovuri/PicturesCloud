@@ -254,6 +254,36 @@ namespace WebApi.Controllers
         }
         
         [HttpGet]
+        [Route("api/folder/list/{folderId}")]
+        public ActionResult<ListFoldersTreeResponse> ListFoldersTree(int folderId)
+        {
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+                _service.CheckUserExists(userId);
+
+                var folders = _service.ListFoldersTree(folderId);
+
+                return Ok(new ListFoldersTreeResponse()
+                {
+                    Folders = ApiListFoldersTreeMapper.MapListFolderTree(folders.ToArray()),
+                });
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (ContentNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
+        }
+        
+        [HttpGet]
         [Route("api/contents/{folderId}")]
         public ActionResult<GetContentsResponse> GetContents(int folderId)
         {

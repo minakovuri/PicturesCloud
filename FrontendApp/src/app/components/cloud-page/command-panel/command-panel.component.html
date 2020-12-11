@@ -1,14 +1,5 @@
 <div class="command-panel">
-  <div class="section-label">
-    <div
-      *ngIf="prevFolder !== undefined"
-      (click)="goBack()"
-      class="back-button"
-    >
-    </div>
-    {{ sectionTitle }}
-  </div>
-
+  <app-breadcrumbs></app-breadcrumbs>
   <div class="buttons-group">
     <button
       mat-stroked-button

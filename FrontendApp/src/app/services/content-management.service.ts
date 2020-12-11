@@ -12,12 +12,21 @@ type ApiContent = {
   readonly starred: boolean|null
 }
 
+type ApiFolderListItem = {
+  readonly id: number,
+  readonly name: string
+}
+
 interface GetContentsResponse {
   readonly contents: Array<ApiContent>
 }
 
 interface GetContentResponse {
   readonly content: ApiContent
+}
+
+interface ListFoldersResponse {
+  readonly folders: ApiFolderListItem[]
 }
 
 interface AddImageResponse {
@@ -73,6 +82,11 @@ class ContentManagementService {
   getFolderContents(folderID: number): Observable<GetContentsResponse> {
     const url = `${this.baseUrl}/contents/${folderID}`
     return this.http.get<GetContentsResponse>(url)
+  }
+
+  listFolders(folderId: number): Observable<ListFoldersResponse> {
+    const url = `${this.baseUrl}/folder/list/${folderId}`
+    return this.http.get<ListFoldersResponse>(url);
   }
 
   addImage(fileName: string, folderId: number|null): Observable<AddImageResponse> {

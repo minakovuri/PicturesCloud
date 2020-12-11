@@ -5,6 +5,7 @@ enum ContentsActionTypes {
   LOAD_ROOT_CONTENTS = '[Contents] Load Root Contents',
   LOAD_FOLDER_CONTENTS = '[Contents] Load Folder Contents',
   LOAD_STARRED_CONTENTS = '[Contents] Load Starred Contents',
+  LOAD_FOLDERS_LIST = '[Contents] Load Folders List',
   ADD_CONTENTS = '[Contents] Add Contents',
   ADD_CONTENT = '[Contents] Add Content',
   REMOVE_CONTENT = '[Contents] Remove Content',
@@ -27,6 +28,12 @@ class LoadStarredContents implements Action  {
 // возможно этот action стоит вынести в другое место - он не относится к доменным операциям, это операция viewModel-и
 class LoadFolderContents implements Action {
   readonly type = ContentsActionTypes.LOAD_FOLDER_CONTENTS
+  constructor(public payload: { folderID: number }) {}
+}
+
+// возможно этот action стоит вынести в другое место - он не относится к доменным операциям, это операция viewModel-и
+class LoadFoldersList implements Action {
+  readonly type  = ContentsActionTypes.LOAD_FOLDERS_LIST
   constructor(public payload: { folderID: number }) {}
 }
 
@@ -55,19 +62,17 @@ class SetImageStarred implements Action {
   constructor(public payload: { imageId: number, starred: boolean }) {}
 }
 
-type ContentsAction = LoadRootContents
-  | LoadFolderContents
-  | LoadStarredContents
-  | AddContents
+type ContentsAction = AddContents
   | AddContent
   | RemoveContent
   | UpdateContentName
   | SetImageStarred
 
 export {
-  LoadRootContents,
-  LoadFolderContents,
-  LoadStarredContents,
+  LoadRootContents, // Это по-хоррошему надо вынести в отдельный модуль
+  LoadFolderContents, // Это по-хоррошему надо вынести в отдельный модуль
+  LoadStarredContents, // Это по-хоррошему надо вынести в отдельный модуль
+  LoadFoldersList, // Это по-хоррошему надо вынести в отдельный модуль
   AddContents,
   AddContent,
   RemoveContent,

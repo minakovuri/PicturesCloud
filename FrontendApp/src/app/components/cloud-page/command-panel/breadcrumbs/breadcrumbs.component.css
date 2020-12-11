@@ -1,0 +1,8 @@
+.breadcrumb {
+  margin: 15px 5px;
+  max-width: 1200px;
+}
+
+.breadcrumb-item:not(.active) {
+  cursor: pointer;
+}

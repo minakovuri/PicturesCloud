@@ -1,0 +1,12 @@
+<nav class="breadcrumbs" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li
+      class="breadcrumb-item"
+      *ngFor="let item of items; let i = index" [attr.data-index]="i"
+      [ngClass]="{'active': i === items.length - 1}"
+      (click)="onItemClick(item)"
+    >
+      {{item.name}}
+    </li>
+  </ol>
+</nav>

@@ -4,9 +4,17 @@ import {catchError, exhaustMap, map} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {of} from 'rxjs';
 
-import {AddContents, ContentsActionTypes, LoadFolderContents, LoadRootContents, LoadStarredContents} from '../actions/contents.actions';
+import {
+  AddContents,
+  ContentsActionTypes,
+  LoadFolderContents,
+  LoadFoldersList,
+  LoadRootContents,
+  LoadStarredContents
+} from '../actions/contents.actions';
 import {ApiDataToModelDataMappers, ContentManagementService} from '../../services/content-management.service';
 import {InternalServerError} from '../actions/common.actions';
+import {SetFolderItems} from '../actions/view-model/breadcrumbs.actions';
 
 @Injectable()
 class ContentEffects {
@@ -71,6 +79,27 @@ class ContentEffects {
       )
     )
   )
+
+  loadFolderList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<LoadFoldersList>(ContentsActionTypes.LOAD_FOLDERS_LIST),
+      exhaustMap(action =>
+        this.contentManagementService.listFolders(action.payload.folderID).pipe(
+          map(response => new SetFolderItems({
+            folderItems: response.folders.map(folder => ({
+              type: 'folder',
+              ...folder,
+            })),
+          })),
+          catchError(response => {
+            if (response instanceof HttpErrorResponse) {
+              const errorMessage = response.error.message
+              return of(new InternalServerError({errorMessage}))
+            }
+          })
+        )
+      )
+    ))
 }
 
 export {

@@ -138,6 +138,34 @@ namespace WebApi.Core.Services
             return content;
         }
 
+        public List<Folder> ListFoldersTree(int folderId)
+        {
+            List<Folder> foldersTree = new List<Folder>();
+
+            Folder folder = _repository.GetFolder(folderId);
+            foldersTree.Add(folder);
+
+            if (folder.FolderId != null)
+            {
+                FillFoldersTree(foldersTree, folder.FolderId.Value);
+            }
+
+            foldersTree.Reverse();
+
+            return foldersTree;
+        }
+
+        private void FillFoldersTree(List<Folder> foldersTree, int folderId)
+        {
+            Folder folder = _repository.GetFolder(folderId);
+            foldersTree.Add(folder);            
+
+            if (folder.FolderId != null)
+            {
+                FillFoldersTree(foldersTree, folder.FolderId.Value);
+            }
+        }
+
         public List<Content> GetContents(int? folderId, int userId)
         {
             if (folderId != null && _repository.GetFolder(folderId.Value) == null)

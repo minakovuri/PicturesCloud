@@ -17,6 +17,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
 import { RenameContentModalComponent } from './content-area/modals/rename-content-modal/rename-content-modal.component';
+import { BreadcrumbsComponent } from './command-panel/breadcrumbs/breadcrumbs.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { RenameContentModalComponent } from './content-area/modals/rename-conten
     PreviewModalComponent,
     CreateFolderModalComponent,
     RenameContentModalComponent,
+    BreadcrumbsComponent,
   ],
   imports: [
     CommonModule,
