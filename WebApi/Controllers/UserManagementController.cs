@@ -61,7 +61,6 @@ namespace WebApi.Controllers
 
                 return Ok(new AuthResponse
                 {
-                    User = user,
                     Token = token
                 });
             }
@@ -83,7 +82,32 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpGet]
+        [Route("api/user")]
+        public ActionResult<GetUserResponse> GetUser()
+        {
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+
+                var user = _service.GetUser(userId);
+
+                return Ok(new GetUserResponse()
+                {
+                    User = ApiUserMapper.MapUserData(user)
+                });
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
+        }
+
+        /*[HttpPut]
         [Route("api/user")]
         public IActionResult Update([FromBody] UpdateUserRequest request)
         {
@@ -92,6 +116,6 @@ namespace WebApi.Controllers
             // TODO
 
             return Ok();
-        }
+        }*/
     }
 }

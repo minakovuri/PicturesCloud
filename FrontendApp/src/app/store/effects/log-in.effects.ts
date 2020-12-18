@@ -6,7 +6,7 @@ import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 
 import {AuthenticationService} from '../../services/authentication.service';
-import {AuthActionTypes, LogIn, LogInFailure, LogInSuccess, LogOut} from '../actions/auth.actions';
+import {AuthActionTypes, GetUser, LogIn, LogInFailure, LogInSuccess, LogOut, SetUser} from '../actions/auth.actions';
 import {InternalServerError} from '../actions/common.actions';
 
 @Injectable()
@@ -24,6 +24,29 @@ class LogInEffects {
         this.authService.logIn(action.payload.login, action.payload.password).pipe(
           map(response => new LogInSuccess({
             token: response.token,
+          })),
+          catchError(errorResponse => {
+            const typedErrorResponse = errorResponse as HttpErrorResponse
+            const errorMessage = typedErrorResponse.error.message
+            switch (typedErrorResponse.status) {
+              case 404:
+              case 400:
+                return of(new LogInFailure({errorMessage}))
+              case 500:
+                return of(new InternalServerError({errorMessage}))
+            }
+          })
+        )
+      )
+    )
+  )
+
+  getUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<GetUser>(AuthActionTypes.GET_USER),
+      exhaustMap(() =>
+        this.authService.getUser().pipe(
+          map(response => new SetUser({
             user: response.user
           })),
           catchError(errorResponse => {
@@ -46,7 +69,7 @@ class LogInEffects {
     this.actions$.pipe(
       ofType<LogInSuccess>(AuthActionTypes.LOGIN_SUCCESS),
       tap(({payload}) => {
-        localStorage.setItem('token', payload.token)
+        this.authService.saveToken(payload.token)
         this.router.navigateByUrl('/')
       })
     ),
@@ -71,7 +94,7 @@ class LogInEffects {
     this.actions$.pipe(
       ofType<LogOut>(AuthActionTypes.LOGOUT),
       tap(() => {
-        localStorage.removeItem('token')
+        this.authService.deleteToken()
         this.router.navigateByUrl('/login')
       })
     ), {

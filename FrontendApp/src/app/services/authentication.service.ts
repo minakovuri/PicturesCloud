@@ -2,12 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 
-import {User} from '../models/User';
 import {environment} from '../../environments/environment';
+import {User} from '../models/User';
 
 interface LoginResponse {
-  readonly user: User,
   readonly token: string
+}
+
+interface GetUserResponse {
+  readonly user: User
 }
 
 @Injectable()
@@ -35,6 +38,19 @@ class AuthenticationService {
     }
 
     return this.http.post<void>(url, body)
+  }
+
+  getUser(): Observable<GetUserResponse> {
+    const url = this.baseUrl
+    return this.http.get<GetUserResponse>(url)
+  }
+
+  saveToken(token: string): void {
+    localStorage.setItem('token', token)
+  }
+
+  deleteToken(): void {
+    localStorage.removeItem('token')
   }
 }
 

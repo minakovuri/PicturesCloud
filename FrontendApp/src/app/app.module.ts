@@ -8,7 +8,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import {LoginPageModule} from './components/login-page/login-page.module';
 import { AuthenticationService } from './services/authentication.service';
 import {reducers} from './store/state';
@@ -24,6 +23,7 @@ import {ContentAreaEffects} from './store/effects/content-area.effects';
 import {SelectionEffects} from './store/effects/selection.effects';
 import {CreateFolderPopupEffects} from './store/effects/create-folder-popup.effects';
 import {RenameContentPopupEffects} from './store/effects/rename-content-popup.effects';
+import {ProfilePageModule} from './components/profile-page/profile-page.module';
 
 const effects = [
   LogInEffects,
@@ -39,7 +39,6 @@ const effects = [
 @NgModule({
   declarations: [
     AppComponent,
-    ProfilePageComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +50,7 @@ const effects = [
     CloudPageModule,
     LoginPageModule,
     SignupPageModule,
+    ProfilePageModule,
     NgbModule,
   ],
   providers: [

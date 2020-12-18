@@ -1,1 +1,39 @@
-<p>profile-page works!</p>
+<div class="profile-page">
+  <div class="header">
+    <div
+      class="close-profile-button"
+    >
+      Закрыть страницу профиля
+    </div>
+  </div>
+  <div class="body">
+    <div class="profile-card">
+      <div class="profile-icon"></div>
+      <div class="login">
+        Логин: {{ user ? user.login : ''}}
+      </div>
+      <div class="change-profile-buttons">
+        <button
+          mat-raised-button
+          color="primary"
+        >
+          Сменить логин
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+        >
+          Сменить пароль
+        </button>
+      </div>
+      <button
+        class="logout-button"
+        mat-raised-button
+        color="warn"
+        (click)="onLogoutButtonClick()"
+      >
+        Выйти
+      </button>
+    </div>
+  </div>
+</div>

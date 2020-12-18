@@ -29,6 +29,15 @@ namespace WebApi.Core.Services
             return user;
         }
 
+        public User GetUser(int userId)
+        {
+            var user = _repository.GetUser(userId);
+            if (user == null)
+                throw new UserNotExistError("User with id \"" + userId + "\" doesn't exist");
+
+            return user;
+        }
+
         public void AddUser(string login, string password)
         {
             if (string.IsNullOrWhiteSpace(password))

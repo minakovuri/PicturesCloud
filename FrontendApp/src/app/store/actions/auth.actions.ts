@@ -8,7 +8,9 @@ enum AuthActionTypes {
   SIGNUP = '[Auth] Signup',
   SIGNUP_SUCCESS = '[Auth] Signup Success',
   SIGNUP_FAILURE = '[Auth] Signup Failure',
-  LOGOUT = '[Auth] Logout'
+  LOGOUT = '[Auth] Logout',
+  GET_USER = '[Auth] Get User',
+  SET_USER = '[Auth] Set User'
 }
 
 class LogIn implements Action {
@@ -18,7 +20,7 @@ class LogIn implements Action {
 
 class LogInSuccess implements Action {
   readonly type = AuthActionTypes.LOGIN_SUCCESS;
-  constructor(public payload: {user: User, token: string}) {}
+  constructor(public payload: {token: string}) {}
 }
 
 class LogInFailure implements Action {
@@ -46,6 +48,16 @@ class SignUpFailure implements Action {
   constructor(public payload: {errorMessage: string}) {}
 }
 
+class GetUser implements Action {
+  readonly type = AuthActionTypes.GET_USER;
+  constructor() {}
+}
+
+class SetUser implements Action {
+  readonly type = AuthActionTypes.SET_USER;
+  constructor(public payload: {user: User}) {}
+}
+
 type AuthAction = LogIn
   | LogInSuccess
   | LogInFailure
@@ -53,6 +65,8 @@ type AuthAction = LogIn
   | SignUpSuccess
   | SignUpFailure
   | LogOut
+  | GetUser
+  | SetUser
 
 export {
   LogIn,
@@ -62,6 +76,8 @@ export {
   SignUpSuccess,
   SignUpFailure,
   LogOut,
+  GetUser,
+  SetUser,
   AuthActionTypes,
   AuthAction,
 }

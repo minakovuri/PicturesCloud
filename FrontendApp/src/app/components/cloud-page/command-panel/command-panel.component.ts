@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../../store/state';
-import {AddImage} from '../../../store/actions/view-model/command-panel.actions';
+import {AddImage, OpenProfilePage} from '../../../store/actions/view-model/command-panel.actions';
 import {selectionStateSelector} from '../../../store/selectors/selection.selectors';
 import {FolderState} from '../../../store/reducers/selection.reducer';
 import {OpenPopup} from '../../../store/actions/view-model/create-folder-popup.actions';
@@ -51,6 +51,10 @@ export class CommandPanelComponent implements OnInit {
 
   onLogoutButtonClick(): void {
     this.store.dispatch(new LogOut())
+  }
+
+  onOpenProfileButtonClick(): void {
+    this.store.dispatch(new OpenProfilePage())
   }
 
   onOpenCreateFolderPopup(): void {

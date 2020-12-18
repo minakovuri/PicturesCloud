@@ -52,5 +52,21 @@ namespace WebApi.Repositories.UserManagement
                 PasswordSalt = user.PasswordSalt
             };
         }
+
+        public User? GetUser(int id)
+        {
+            var user = _dbContext.Users.SingleOrDefault(x => x.Id == id);
+            if (user == null)
+                throw new UserNotExistError("User not exist");
+            
+            return new User()
+            {
+                Id = user.Id,
+                Login = user.Login,
+                Guid = user.Guid,
+                PasswordHash = user.PasswordHash,
+                PasswordSalt = user.PasswordSalt
+            };
+        }
     }
 }

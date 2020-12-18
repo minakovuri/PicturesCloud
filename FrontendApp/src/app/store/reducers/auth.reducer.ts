@@ -15,9 +15,15 @@ function authReducer(state = initialState, action: AuthAction): AuthState {
   switch (action.type) {
     case AuthActionTypes.LOGIN_SUCCESS: {
       return {
+        ...state,
         isAuthenticated: true,
-        user: action.payload.user,
       };
+    }
+    case AuthActionTypes.SET_USER: {
+      return {
+        ...state,
+        user: action.payload.user,
+      }
     }
     default: {
       return state;

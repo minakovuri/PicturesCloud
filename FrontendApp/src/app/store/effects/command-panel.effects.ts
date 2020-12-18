@@ -1,18 +1,19 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {exhaustMap, map, withLatestFrom, switchMap} from 'rxjs/operators';
+import {exhaustMap, map, withLatestFrom, switchMap, tap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 
 import {
   AddImage,
   ClearUploadedFileData,
   CommandPanelActionTypes,
-  GetContent,
+  GetContent, OpenProfilePage,
   UploadImage
 } from '../actions/view-model/command-panel.actions';
 import {ApiDataToModelDataMappers, ContentManagementService} from '../../services/content-management.service';
 import {AppState} from '../state';
 import {AddContent} from '../actions/contents.actions';
+import {Router} from '@angular/router';
 
 @Injectable()
 class CommandPanelEffects {
@@ -20,6 +21,7 @@ class CommandPanelEffects {
     private actions$: Actions,
     private store$: Store<AppState>,
     private contentManagementService: ContentManagementService,
+    private router: Router,
   ) {}
 
   addImage$ = createEffect(() =>
@@ -64,6 +66,17 @@ class CommandPanelEffects {
         )
       )
     )
+  )
+
+  openProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<OpenProfilePage>(CommandPanelActionTypes.OPEN_PROFILE_PAGE),
+      tap(() => {
+        this.router.navigateByUrl('/profile')
+      }),
+    ), {
+      dispatch: false
+    }
   )
 }
 
