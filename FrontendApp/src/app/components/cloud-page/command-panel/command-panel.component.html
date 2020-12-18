@@ -1,3 +1,17 @@
+<ng-template #profileMenuPopover>
+  <div
+    class="profile-menu-item profile-page-link"
+  >
+    Профиль
+  </div>
+  <div
+    class="profile-menu-item logout-button"
+    (click)="onLogoutButtonClick()"
+  >
+    Выйти
+  </div>
+</ng-template>
+
 <div class="command-panel">
   <app-breadcrumbs></app-breadcrumbs>
   <div class="buttons-group">
@@ -15,6 +29,11 @@
     >
       Загрузить
     </button>
+    <div
+      class="profile-button"
+      [ngbPopover]="profileMenuPopover"
+      placement="bottom"
+    ></div>
 
     <input
       type="file"

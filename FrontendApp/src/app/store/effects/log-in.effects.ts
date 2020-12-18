@@ -6,7 +6,7 @@ import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 
 import {AuthenticationService} from '../../services/authentication.service';
-import {AuthActionTypes, LogIn, LogInFailure, LogInSuccess} from '../actions/auth.actions';
+import {AuthActionTypes, LogIn, LogInFailure, LogInSuccess, LogOut} from '../actions/auth.actions';
 import {InternalServerError} from '../actions/common.actions';
 
 @Injectable()
@@ -57,7 +57,7 @@ class LogInEffects {
 
   logInFailure$ = createEffect(() =>
     this.actions$.pipe(
-      ofType<LogInFailure>(AuthActionTypes.LOGIN_SUCCESS),
+      ofType<LogInFailure>(AuthActionTypes.LOGIN_FAILURE),
       tap(({payload}) => {
         console.error(payload.errorMessage)
       })
@@ -66,6 +66,17 @@ class LogInEffects {
       dispatch: false
     }
   )
+
+  logOut$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType<LogOut>(AuthActionTypes.LOGOUT),
+      tap(() => {
+        localStorage.removeItem('token')
+        this.router.navigateByUrl('/login')
+      })
+    ), {
+    dispatch: false,
+  })
 }
 
 export {

@@ -5,6 +5,7 @@ import {AddImage} from '../../../store/actions/view-model/command-panel.actions'
 import {selectionStateSelector} from '../../../store/selectors/selection.selectors';
 import {FolderState} from '../../../store/reducers/selection.reducer';
 import {OpenPopup} from '../../../store/actions/view-model/create-folder-popup.actions';
+import {LogOut} from '../../../store/actions/auth.actions';
 
 @Component({
   selector: 'app-command-panel',
@@ -46,6 +47,10 @@ export class CommandPanelComponent implements OnInit {
         ? this.currentFolder.id
         : null
     }))
+  }
+
+  onLogoutButtonClick(): void {
+    this.store.dispatch(new LogOut())
   }
 
   onOpenCreateFolderPopup(): void {
