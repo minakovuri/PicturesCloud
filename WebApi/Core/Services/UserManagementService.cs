@@ -24,7 +24,7 @@ namespace WebApi.Core.Services
                 throw new UserNotExistError("User with login \"" + login + "\" doesn't exist");
             
             if (!PasswordManager.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-                throw new AuthVerifyPasswordError("Password \"" + password + "\"is incorrect");
+                throw new VerifyPasswordError("Password is incorrect");
 
             return user;
         }
@@ -33,7 +33,7 @@ namespace WebApi.Core.Services
         {
             var user = _repository.GetUser(userId);
             if (user == null)
-                throw new UserNotExistError("User with id \"" + userId + "\" doesn't exist");
+                throw new UserNotExistError("User doesn't exist");
 
             return user;
         }
@@ -44,7 +44,7 @@ namespace WebApi.Core.Services
                 throw new InvalidParamsError("Password is required");
             
             if (_repository.LoginAlreadyTaken(login))
-                throw new RegistrationLoginTakenError("Login \"" + login + "\" is already taken");
+                throw new LoginTakenError("Login is already taken");
 
             byte[] passwordHash, passwordSalt;
             PasswordManager.CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -58,6 +58,49 @@ namespace WebApi.Core.Services
             };
 
             _repository.AddUser(user);
+        }
+
+        public void UpdateUserLogin(int userId, string newLogin)
+        {
+            if (_repository.LoginAlreadyTaken(newLogin))
+                throw new LoginTakenError("Login is already taken");
+            
+            var user = _repository.GetUser(userId);
+            if (user == null)
+                throw new UserNotExistError("User doesn't exist");
+
+            User updatedUser = new User
+            {
+                Login = newLogin,
+                Guid = user.Guid,
+                PasswordHash = user.PasswordHash,
+                PasswordSalt = user.PasswordSalt,
+            };
+            
+            _repository.UpdateUser(userId, updatedUser);
+        }
+
+        public void UpdateUserPassword(int userId, string password, string newPassword)
+        {
+            var user = _repository.GetUser(userId);
+            if (user == null)
+                throw new UserNotExistError("User doesn't exist");
+            
+            if (!PasswordManager.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+                throw new VerifyPasswordError("Password is incorrect");
+            
+            byte[] newPasswordHash, newPasswordSalt;
+            PasswordManager.CreatePasswordHash(newPassword, out newPasswordHash, out newPasswordSalt);
+            
+            User updatedUser = new User
+            {
+                Login = user.Login,
+                Guid = user.Guid,
+                PasswordHash = newPasswordHash,
+                PasswordSalt = newPasswordSalt,
+            };
+            
+            _repository.UpdateUser(userId, updatedUser);
         }
     }
 }

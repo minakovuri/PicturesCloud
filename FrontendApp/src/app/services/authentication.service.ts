@@ -45,6 +45,25 @@ class AuthenticationService {
     return this.http.get<GetUserResponse>(url)
   }
 
+  changeLogin(newLogin: string): Observable<void> {
+    const url = `${this.baseUrl}/login`
+    const body = {
+      newLogin,
+    }
+
+    return this.http.post<void>(url, body)
+  }
+
+  changePassword(password: string, newPassword: string): Observable<void> {
+    const url = `${this.baseUrl}/password`
+    const body = {
+      password,
+      newPassword,
+    }
+
+    return this.http.post<void>(url, body)
+  }
+
   saveToken(token: string): void {
     localStorage.setItem('token', token)
   }

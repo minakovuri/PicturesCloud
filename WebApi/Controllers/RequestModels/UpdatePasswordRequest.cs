@@ -2,12 +2,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Controllers.RequestModels
 {
-    public class UpdateUserRequest
+    public class UpdatePasswordRequest
     {
         [Required]
-        public string Login { get; set; }
-
-        [Required]
         public string Password { get; set; }
+        
+        [Required]
+        public string NewPassword { get; set; }
     }
 }

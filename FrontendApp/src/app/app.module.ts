@@ -24,6 +24,7 @@ import {SelectionEffects} from './store/effects/selection.effects';
 import {CreateFolderPopupEffects} from './store/effects/create-folder-popup.effects';
 import {RenameContentPopupEffects} from './store/effects/rename-content-popup.effects';
 import {ProfilePageModule} from './components/profile-page/profile-page.module';
+import {ProfilePageEffects} from './store/effects/profile-page.effects';
 
 const effects = [
   LogInEffects,
@@ -34,6 +35,7 @@ const effects = [
   SelectionEffects,
   CreateFolderPopupEffects,
   RenameContentPopupEffects,
+  ProfilePageEffects,
 ]
 
 @NgModule({

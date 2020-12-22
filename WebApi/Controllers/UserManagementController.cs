@@ -35,7 +35,7 @@ namespace WebApi.Controllers
                 _service.AddUser(request.Login, request.Password);
                 return Ok();
             }
-            catch (RegistrationLoginTakenError e)
+            catch (LoginTakenError e)
             {
                 return StatusCode(StatusCodes.Status409Conflict, new {message = e.Message});
             }
@@ -57,6 +57,7 @@ namespace WebApi.Controllers
             try
             {
                 var user = _service.Authenticate(request.Login, request.Password);
+                
                 string token = TokenGenerator.GenerateToken(_jwtSettings.Secret, user.Id.ToString());
 
                 return Ok(new AuthResponse
@@ -72,7 +73,7 @@ namespace WebApi.Controllers
             {
                 return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
             }
-            catch (AuthVerifyPasswordError e)
+            catch (VerifyPasswordError e)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, new {message = e.Message});
             }
@@ -107,15 +108,56 @@ namespace WebApi.Controllers
             }
         }
 
-        /*[HttpPut]
-        [Route("api/user")]
-        public IActionResult Update([FromBody] UpdateUserRequest request)
+        [HttpPost]
+        [Route("api/user/login")]
+        public IActionResult UpdateLogin([FromBody] UpdateLoginRequest request)
         {
-            var userId = User.Identity.Name;
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+                
+                _service.UpdateUserLogin(userId, request.NewLogin);
 
-            // TODO
+                return Ok();
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (LoginTakenError e)
+            {
+                return StatusCode(StatusCodes.Status409Conflict, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
+        }
+        
+        [HttpPost]
+        [Route("api/user/password")]
+        public IActionResult UpdatePassword([FromBody] UpdatePasswordRequest request)
+        {
+            try
+            {
+                var userId = Int32.Parse(User.Identity.Name);
+                
+                _service.UpdateUserPassword(userId, request.Password, request.NewPassword);
 
-            return Ok();
-        }*/
+                return Ok();
+            }
+            catch (UserNotExistError e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+            }
+            catch (VerifyPasswordError e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, new {message = e.Message});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new {message = e.Message});
+            }
+        }
     }
 }

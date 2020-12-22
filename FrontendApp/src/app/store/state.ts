@@ -9,6 +9,7 @@ import {imagePreviewReducer, ImagePreviewState} from './reducers/image-preview.r
 import {createFolderPopupReducer, CreateFolderPopupState} from './reducers/create-folder-popup.reducer';
 import {renameContentPopupReducer, RenameContentPopupState} from './reducers/rename-content-popup.reducer';
 import {breadcrumbsReducer, BreadcrumbsState} from './reducers/breadcrumbs.reducer';
+import {profilePageReducer, ProfilePageState} from './reducers/profile-page.reducer';
 
 interface AppState {
   authState: AuthState; // domainModel
@@ -21,6 +22,7 @@ interface AppState {
   createFolderPopupState: CreateFolderPopupState, // viewModel
   renameContentPopupState: RenameContentPopupState, // viewModel,
   breadcrumbsState: BreadcrumbsState, // viewModel
+  profilePageState: ProfilePageState, // viewModel
 }
 
 const reducers: ActionReducerMap<AppState> = {
@@ -34,6 +36,7 @@ const reducers: ActionReducerMap<AppState> = {
   createFolderPopupState: createFolderPopupReducer,
   renameContentPopupState: renameContentPopupReducer,
   breadcrumbsState: breadcrumbsReducer,
+  profilePageState: profilePageReducer,
 }
 
 export {

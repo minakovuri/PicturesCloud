@@ -1,0 +1,18 @@
+.modal-title {
+  margin-left: auto;
+  margin-bottom: 0;
+  font-weight: 500
+}
+
+.form {
+  width: 100%;
+}
+
+.modal-footer {
+  justify-content: space-between;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+}

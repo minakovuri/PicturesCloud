@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h4 class="modal-title">Сменить логин</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="onClose()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form
+    class="example-form"
+    [formGroup]="form"
+  >
+    <mat-form-field class="form">
+      <mat-label>Новый логин</mat-label>
+      <input
+        matInput
+        placeholder="Введите новый логин..."
+        name="login"
+        formControlName="login"
+      >
+      <mat-error>
+        Пожалуйста, введите новый логин
+      </mat-error>
+    </mat-form-field>
+
+    <span class="error-message" *ngIf="errorMessage.length">
+        Ошибка: {{errorMessage}}
+    </span>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    class="btn btn-outline-dark"
+    (click)="onClose()"
+  >Закрыть</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onAccept()"
+  >Сменить</button>
+</div>

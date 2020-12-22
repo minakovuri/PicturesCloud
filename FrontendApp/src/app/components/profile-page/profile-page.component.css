@@ -1,5 +1,8 @@
 .header {
+  display: flex;
+  padding: 15px;
   height: 50px;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .body {
@@ -45,4 +48,17 @@
 .logout-button {
   margin: 30px auto 0;
   width: 100px;
+}
+
+.close-profile-button {
+  display: flex;
+}
+
+.back-icon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin-right: 15px;
+  background: url("src/assets/back-icon.svg") no-repeat;
+  background-size: contain;
 }

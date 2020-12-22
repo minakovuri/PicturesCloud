@@ -11,5 +11,7 @@ namespace WebApi.Core.Interfaces
         public User? GetUser(string login);
 
         public User? GetUser(int id);
+        
+        public void UpdateUser(int id, User user);
     }
 }

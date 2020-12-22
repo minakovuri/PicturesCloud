@@ -3,6 +3,10 @@
     <div
       class="close-profile-button"
     >
+      <div
+        class="back-icon"
+        (click)="onCloseProfile()"
+      ></div>
       Закрыть страницу профиля
     </div>
   </div>
@@ -16,12 +20,14 @@
         <button
           mat-raised-button
           color="primary"
+          (click)="onChangeLoginButtonClick()"
         >
           Сменить логин
         </button>
         <button
           mat-raised-button
           color="primary"
+          (click)="onChangePasswordButtonClick()"
         >
           Сменить пароль
         </button>
