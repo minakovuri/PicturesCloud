@@ -13,18 +13,6 @@ import {CreateFolderModalComponent} from './modals/create-folder-modal/create-fo
 import {renameContentPopupSelector} from '../../../store/selectors/rename-content-popup.selectors';
 import {RenameContentModalComponent} from './modals/rename-content-modal/rename-content-modal.component';
 
-const ITEMS_IN_ROW_COUNT = 4
-
-function divideContentsList(contents: Array<Content>): Array<Array<Content>> {
-  const tempArray = [];
-
-  for (let index = 0; index < contents.length; index += ITEMS_IN_ROW_COUNT) {
-    const myChunk = contents.slice(index, index + ITEMS_IN_ROW_COUNT);
-    tempArray.push(myChunk);
-  }
-
-  return tempArray;
-}
 
 @Component({
   selector: 'app-content-area',
@@ -32,7 +20,7 @@ function divideContentsList(contents: Array<Content>): Array<Array<Content>> {
   styleUrls: ['./content-area.component.css']
 })
 export class ContentAreaComponent implements OnInit {
-  contents: Array<Array<Content>>
+  contents: Array<Content>
 
   ContentTypes = ContentTypes
 
@@ -45,7 +33,7 @@ export class ContentAreaComponent implements OnInit {
     this.store
       .pipe(select(contentsStateSelector))
       .subscribe((contentsState) => {
-          this.contents = divideContentsList(contentsState.contents)
+          this.contents = contentsState.contents
        })
 
     this.store

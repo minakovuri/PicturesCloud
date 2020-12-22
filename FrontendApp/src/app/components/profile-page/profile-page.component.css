@@ -9,6 +9,8 @@
   display: flex;
   align-items: center;
   height: calc(100vh - 50px);
+  background: url("src/assets/profile-background.svg") no-repeat center;
+  background-size: cover;
 }
 
 .profile-card {
@@ -19,6 +21,7 @@
   box-shadow: var(--box-shadow);
   margin: 0 auto;
   padding: 50px 100px;
+  background: white;
 }
 
 .profile-icon {

@@ -1,28 +1,23 @@
 <div class="content-area">
   <div class="contents-table">
     <div
-      *ngFor="let row of contents"
-      class="contents-row"
+      *ngFor="let content of contents"
+      [ngSwitch]="content.Type"
+      class="content-item"
     >
-      <div
-        *ngFor="let content of row"
-        [ngSwitch]="content.Type"
-        class="content-item"
-      >
-        <app-image-item
-          *ngSwitchCase="ContentTypes.Image"
-          [Id]="content.Id"
-          [Name]="content.Name"
-          [FolderId]="content.FolderId"
-          [Starred]="content.Starred"
-        ></app-image-item>
-        <app-folder-item
-          *ngSwitchCase="ContentTypes.Folder"
-          [Id]="content.Id"
-          [Name]="content.Name"
-          [FolderId]="content.FolderId"
-        ></app-folder-item>
-      </div>
+      <app-image-item
+        *ngSwitchCase="ContentTypes.Image"
+        [Id]="content.Id"
+        [Name]="content.Name"
+        [FolderId]="content.FolderId"
+        [Starred]="content.Starred"
+      ></app-image-item>
+      <app-folder-item
+        *ngSwitchCase="ContentTypes.Folder"
+        [Id]="content.Id"
+        [Name]="content.Name"
+        [FolderId]="content.FolderId"
+      ></app-folder-item>
     </div>
   </div>
 </div>

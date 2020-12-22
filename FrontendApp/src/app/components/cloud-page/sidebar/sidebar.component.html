@@ -1,14 +1,16 @@
 <div class="sidebar">
   <div class="logo"></div>
 
-  <mat-nav-list class="tabs-list">
+  <div class="buttons-group">
     <button
-      mat-list-item
+      mat-stroked-button
+      class="sidebar-button"
       (click)="openAllMaterials()"
     >Все материалы</button>
     <button
-      mat-list-item
+      mat-stroked-button
+      class="sidebar-button"
       (click)="openFavourites()"
     >Избранное</button>
-  </mat-nav-list>
+  </div>
 </div>
