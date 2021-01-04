@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using WebApi.Repositories.DbContexts;
 using WebApi.Repositories.ContentManagement;
 using WebApi.Repositories.UserManagement;
 using System.Text;
+using Microsoft.Extensions.FileProviders;
 using WebApi.Settings;
 
 namespace WebApi
@@ -79,6 +81,13 @@ namespace WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "Storage")),
+                RequestPath = "/storage"
+            });
 
             app.UseCors(x => x
                 .AllowAnyOrigin()
