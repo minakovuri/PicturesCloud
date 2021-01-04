@@ -15,10 +15,7 @@ import {
 } from '../actions/view-model/content-area.actions';
 import {ImagePreviewActionTypes, SetPreviewImage} from '../actions/view-model/image-preview.actions';
 import {InternalServerError} from '../actions/common.actions';
-import {environment} from '../../../environments/environment';
 import {RemoveContent, SetImageStarred} from '../actions/contents.actions';
-
-const fileStorageUrl = `${environment.fileStorageConfig.protocol}://${environment.fileStorageConfig.host}:${environment.fileStorageConfig.port}`
 
 function downloadBlobAsFile(blob: Blob, name: string): void {
   const a = document.createElement('a')
@@ -44,7 +41,7 @@ class ContentAreaEffects {
       exhaustMap(action =>
         this.contentManagementService.previewImage(action.payload.imageId).pipe(
           map(response => new SetPreviewImage({
-            previewUrl: `${fileStorageUrl}/${response.previewUrl}`
+            previewUrl: `${this.contentManagementService.getStorageBaseUrl()}/${response.previewUrl}`
           })),
           catchError(response => {
             if (response instanceof HttpErrorResponse) {

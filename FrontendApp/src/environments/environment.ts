@@ -8,12 +8,9 @@ export const environment = {
     protocol: 'https',
     host: 'localhost',
     port: 5001,
+    apiBaseUrl: 'api',
+    storageBaseUrl: 'storage',
   },
-  fileStorageConfig: {
-    protocol: 'http',
-    host: 'localhost',
-    port: 7800,
-  }
 };
 
 /*

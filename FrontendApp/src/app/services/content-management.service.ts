@@ -65,9 +65,14 @@ const ApiDataToModelDataMappers = {
 
 @Injectable()
 class ContentManagementService {
-  private baseUrl = `${environment.backendConfig.protocol}://${environment.backendConfig.host}:${environment.backendConfig.port}/api`
+  private baseUrl = `${environment.backendConfig.protocol}://${environment.backendConfig.host}:${environment.backendConfig.port}/${environment.backendConfig.apiBaseUrl}`
+  private storageBaseUrl = `${environment.backendConfig.protocol}://${environment.backendConfig.host}:${environment.backendConfig.port}/${environment.backendConfig.storageBaseUrl}`
 
   constructor(private http: HttpClient) {}
+
+  getStorageBaseUrl(): string {
+    return this.storageBaseUrl
+  }
 
   getRootContents(): Observable<GetContentsResponse> {
     const url = `${this.baseUrl}/contents`

@@ -15,8 +15,7 @@ interface GetUserResponse {
 
 @Injectable()
 class AuthenticationService {
-  private urlPrefix = 'api/user'
-  private baseUrl = `${environment.backendConfig.protocol}://${environment.backendConfig.host}:${environment.backendConfig.port}/${this.urlPrefix}`
+  private baseUrl = `${environment.backendConfig.protocol}://${environment.backendConfig.host}:${environment.backendConfig.port}/${environment.backendConfig.apiBaseUrl}/user`
 
   constructor(private http: HttpClient) {}
 
