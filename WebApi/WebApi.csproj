@@ -20,5 +20,14 @@
     <Folder Include="Storage" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="out\web.config" />
+    <_ContentIncludedByDefault Remove="out\appsettings.Development.json" />
+    <_ContentIncludedByDefault Remove="out\appsettings.Docker.Development.json" />
+    <_ContentIncludedByDefault Remove="out\appsettings.json" />
+    <_ContentIncludedByDefault Remove="out\WebApi.deps.json" />
+    <_ContentIncludedByDefault Remove="out\WebApi.runtimeconfig.json" />
+  </ItemGroup>
+
 
 </Project>
