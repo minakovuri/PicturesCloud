@@ -14,7 +14,7 @@ import {
 } from '../actions/contents.actions';
 import {ApiDataToModelDataMappers, ContentManagementService} from '../../services/content-management.service';
 import {InternalServerError} from '../actions/common.actions';
-import {SetFolderItems} from '../actions/view-model/breadcrumbs.actions';
+import {SetFolderItems} from '../actions/breadcrumbs.actions';
 
 @Injectable()
 class ContentEffects {

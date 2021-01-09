@@ -1,4 +1,4 @@
-import {CreateFolderPopupAction, CreateFolderPopupActionTypes} from '../actions/view-model/create-folder-popup.actions';
+import {CreateFolderPopupAction, CreateFolderPopupActionTypes} from '../actions/create-folder-popup.actions';
 
 interface CreateFolderPopupState {
   showPopup: boolean

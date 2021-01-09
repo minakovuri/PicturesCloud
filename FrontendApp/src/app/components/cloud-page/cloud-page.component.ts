@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../store/state';
-import {OpenAllMaterials} from '../../store/actions/view-model/selection.actions';
+import {OpenAllMaterials} from '../../store/actions/selection.actions';
 
 @Component({
   selector: 'app-cloud-page',

@@ -35,13 +35,19 @@ namespace WebApi.Controllers
                 _service.AddUser(request.Login, request.Password);
                 return Ok();
             }
-            catch (LoginTakenError e)
+            catch (LoginTakenError)
             {
-                return StatusCode(StatusCodes.Status409Conflict, new {message = e.Message});
+                return StatusCode(StatusCodes.Status409Conflict, new
+                {
+                    message = "Указанный логин уже занят"
+                });
             }
-            catch (InvalidParamsError e)
+            catch (InvalidParamsError)
             {
-                return StatusCode(StatusCodes.Status400BadRequest, new {message = e.Message});
+                return StatusCode(StatusCodes.Status400BadRequest, new
+                {
+                    message = "Логин и пароль обязательны для ввода"
+                });
             }
             catch (Exception e)
             {
@@ -65,17 +71,26 @@ namespace WebApi.Controllers
                     Token = token
                 });
             }
-            catch (InvalidParamsError e)
+            catch (InvalidParamsError)
             {
-                return StatusCode(StatusCodes.Status400BadRequest, new {message = e.Message});
+                return StatusCode(StatusCodes.Status400BadRequest, new
+                {
+                    message = "Логин и пароль обязательны для ввода"
+                });
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (VerifyPasswordError e)
+            catch (VerifyPasswordError)
             {
-                return StatusCode(StatusCodes.Status400BadRequest, new {message = e.Message});
+                return StatusCode(StatusCodes.Status400BadRequest, new
+                {
+                    message = "Неверный пароль"
+                });
             }
             catch (Exception e)
             {
@@ -98,9 +113,12 @@ namespace WebApi.Controllers
                     User = ApiUserMapper.MapUserData(user)
                 });
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
             catch (Exception e)
             {
@@ -120,13 +138,19 @@ namespace WebApi.Controllers
 
                 return Ok();
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (LoginTakenError e)
+            catch (LoginTakenError)
             {
-                return StatusCode(StatusCodes.Status409Conflict, new {message = e.Message});
+                return StatusCode(StatusCodes.Status409Conflict, new
+                {
+                    message = "Указанный логин уже занят"
+                });
             }
             catch (Exception e)
             {
@@ -146,13 +170,19 @@ namespace WebApi.Controllers
 
                 return Ok();
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (VerifyPasswordError e)
+            catch (VerifyPasswordError)
             {
-                return StatusCode(StatusCodes.Status400BadRequest, new {message = e.Message});
+                return StatusCode(StatusCodes.Status400BadRequest, new
+                {
+                    message = "Неверный пароль"
+                });
             }
             catch (Exception e)
             {

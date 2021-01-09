@@ -13,18 +13,26 @@ namespace WebApi.Core.Services
         {
             _repository = repository;
         }
+        
+        public void CheckUserExists(int userId)
+        {
+            var user = _repository.GetUser(userId);
+
+            if (user == null)
+                throw new UserNotExistError();
+        }
 
         public User Authenticate(string login, string password)
         {
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
-                throw new InvalidParamsError("Password and login are required");
+                throw new InvalidParamsError();
 
             var user = _repository.GetUser(login);
             if (user == null)
-                throw new UserNotExistError("User with login \"" + login + "\" doesn't exist");
+                throw new UserNotExistError();
             
             if (!PasswordManager.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-                throw new VerifyPasswordError("Password is incorrect");
+                throw new VerifyPasswordError();
 
             return user;
         }
@@ -33,7 +41,7 @@ namespace WebApi.Core.Services
         {
             var user = _repository.GetUser(userId);
             if (user == null)
-                throw new UserNotExistError("User doesn't exist");
+                throw new UserNotExistError();
 
             return user;
         }
@@ -41,10 +49,10 @@ namespace WebApi.Core.Services
         public void AddUser(string login, string password)
         {
             if (string.IsNullOrWhiteSpace(password))
-                throw new InvalidParamsError("Password is required");
+                throw new InvalidParamsError();
             
             if (_repository.LoginAlreadyTaken(login))
-                throw new LoginTakenError("Login is already taken");
+                throw new LoginTakenError();
 
             byte[] passwordHash, passwordSalt;
             PasswordManager.CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -63,11 +71,11 @@ namespace WebApi.Core.Services
         public void UpdateUserLogin(int userId, string newLogin)
         {
             if (_repository.LoginAlreadyTaken(newLogin))
-                throw new LoginTakenError("Login is already taken");
+                throw new LoginTakenError();
             
             var user = _repository.GetUser(userId);
             if (user == null)
-                throw new UserNotExistError("User doesn't exist");
+                throw new UserNotExistError();
 
             User updatedUser = new User
             {
@@ -84,10 +92,10 @@ namespace WebApi.Core.Services
         {
             var user = _repository.GetUser(userId);
             if (user == null)
-                throw new UserNotExistError("User doesn't exist");
+                throw new UserNotExistError();
             
             if (!PasswordManager.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-                throw new VerifyPasswordError("Password is incorrect");
+                throw new VerifyPasswordError();
             
             byte[] newPasswordHash, newPasswordSalt;
             PasswordManager.CreatePasswordHash(newPassword, out newPasswordHash, out newPasswordSalt);

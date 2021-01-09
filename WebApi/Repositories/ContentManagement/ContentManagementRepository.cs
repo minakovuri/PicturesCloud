@@ -163,25 +163,6 @@ namespace WebApi.Repositories.ContentManagement
             };
         }
 
-        public User? GetUser(int id)
-        {
-            var user = _dbContext.Users.SingleOrDefault(x => x.Id == id);
-            
-            if (user == null)
-            {
-                return null;  
-            }
-
-            return new User
-            {
-                Id = user.Id,
-                Guid = user.Guid,
-                Login = user.Login,
-                PasswordHash = user.PasswordHash,
-                PasswordSalt = user.PasswordSalt
-            };
-        }
-
         public List<Content> GetContents(int? folderId, int userId)
         {
             var images = GetImages(folderId, userId);

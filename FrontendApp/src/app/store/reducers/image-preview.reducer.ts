@@ -1,4 +1,4 @@
-import {ImagePreviewAction, ImagePreviewActionTypes} from '../actions/view-model/image-preview.actions';
+import {ImagePreviewAction, ImagePreviewActionTypes} from '../actions/image-preview.actions';
 
 interface ImagePreviewState {
   previewUrl: string,

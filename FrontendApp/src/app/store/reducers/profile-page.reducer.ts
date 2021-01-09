@@ -1,4 +1,4 @@
-import {ProfilePageAction, ProfilePageActionTypes} from '../actions/view-model/profile-page.actions';
+import {ProfilePageAction, ProfilePageActionTypes} from '../actions/profile-page.actions';
 
 interface ProfilePageState {
   changeLoginPopup: {

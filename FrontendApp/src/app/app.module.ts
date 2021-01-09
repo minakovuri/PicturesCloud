@@ -25,6 +25,7 @@ import {CreateFolderPopupEffects} from './store/effects/create-folder-popup.effe
 import {RenameContentPopupEffects} from './store/effects/rename-content-popup.effects';
 import {ProfilePageModule} from './components/profile-page/profile-page.module';
 import {ProfilePageEffects} from './store/effects/profile-page.effects';
+import {SubscriptionsModule} from './components/common/subscriptions.module';
 
 const effects = [
   LogInEffects,
@@ -49,6 +50,7 @@ const effects = [
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot(effects),
     NoopAnimationsModule,
+    SubscriptionsModule,
     CloudPageModule,
     LoginPageModule,
     SignupPageModule,

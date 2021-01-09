@@ -1,4 +1,4 @@
-import {SelectionAction, SelectionActionTypes} from '../actions/view-model/selection.actions';
+import {SelectionAction, SelectionActionTypes} from '../actions/selection.actions';
 
 type SectionType = 'all'|'favourites'
 

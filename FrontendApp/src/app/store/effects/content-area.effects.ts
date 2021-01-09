@@ -12,8 +12,8 @@ import {
   PreviewImage,
   DownloadImage,
   DeleteContent, ChangeImageStarred,
-} from '../actions/view-model/content-area.actions';
-import {ImagePreviewActionTypes, SetPreviewImage} from '../actions/view-model/image-preview.actions';
+} from '../actions/content-area.actions';
+import {ImagePreviewActionTypes, SetPreviewImage} from '../actions/image-preview.actions';
 import {InternalServerError} from '../actions/common.actions';
 import {RemoveContent, SetImageStarred} from '../actions/contents.actions';
 

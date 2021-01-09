@@ -1,4 +1,4 @@
-import {CommandPanelAction, CommandPanelActionTypes} from '../actions/view-model/command-panel.actions';
+import {CommandPanelAction, CommandPanelActionTypes} from '../actions/command-panel.actions';
 
 interface CommandPanelState {
   uploadedImage: File | null

@@ -4,7 +4,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../../../store/state';
 import {profilePageSelector} from '../../../../store/selectors/profile-page.selectors';
-import {ChangeLogin} from '../../../../store/actions/view-model/profile-page.actions';
+import {ChangeLogin} from '../../../../store/actions/profile-page.actions';
 
 @Component({
   selector: 'app-change-login-modal',

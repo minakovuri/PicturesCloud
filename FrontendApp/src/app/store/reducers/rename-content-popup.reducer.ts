@@ -1,15 +1,11 @@
-import {RenameContentPopupAction, RenameContentPopupActionTypes} from '../actions/view-model/rename-content-popup.actions';
+import {RenameContentPopupAction, RenameContentPopupActionTypes} from '../actions/rename-content-popup.actions';
 
 interface RenameContentPopupState {
   showPopup: boolean,
-  contentId: number|null,
-  currentName: string
 }
 
 const initialState: RenameContentPopupState = {
   showPopup: false,
-  contentId: null,
-  currentName: '',
 }
 
 function renameContentPopupReducer(state = initialState, action: RenameContentPopupAction): RenameContentPopupState {
@@ -17,14 +13,10 @@ function renameContentPopupReducer(state = initialState, action: RenameContentPo
     case RenameContentPopupActionTypes.OPEN_POPUP:
       return {
         showPopup: true,
-        contentId: action.payload.contentId,
-        currentName: action.payload.currentName,
       }
     case RenameContentPopupActionTypes.CLOSE_POPUP:
       return {
         showPopup: false,
-        contentId: null,
-        currentName: ''
       }
     default: {
       return state

@@ -7,7 +7,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 
 import {AppState} from '../state';
 import {ContentManagementService} from '../../services/content-management.service';
-import {ClosePopup, RenameContent, RenameContentPopupActionTypes} from '../actions/view-model/rename-content-popup.actions';
+import {ClosePopup, RenameContent, RenameContentPopupActionTypes} from '../actions/rename-content-popup.actions';
 import {InternalServerError} from '../actions/common.actions';
 import {UpdateContentName} from '../actions/contents.actions';
 

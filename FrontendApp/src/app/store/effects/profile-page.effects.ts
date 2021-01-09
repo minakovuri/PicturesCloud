@@ -13,7 +13,7 @@ import {
   ChangePasswordFailure,
   ChangePasswordSuccess, CloseChangeLoginPopup, CloseChangePasswordPopup, CloseProfilePage,
   ProfilePageActionTypes
-} from '../actions/view-model/profile-page.actions';
+} from '../actions/profile-page.actions';
 import {AppState} from '../state';
 import {User} from '../../models/User';
 import {SetUser} from '../actions/auth.actions';

@@ -4,7 +4,7 @@ import {select, Store} from '@ngrx/store';
 import {BreadcrumbsItem} from '../../../../store/reducers/breadcrumbs.reducer';
 import {AppState} from '../../../../store/state';
 import {breadcrumbsStateSelector} from '../../../../store/selectors/breadcrumbs.selectors';
-import {OpenAllMaterials, OpenFavourites, OpenFolder} from '../../../../store/actions/view-model/selection.actions';
+import {OpenAllMaterials, OpenFavourites, OpenFolder} from '../../../../store/actions/selection.actions';
 
 @Component({
   selector: 'app-breadcrumbs',

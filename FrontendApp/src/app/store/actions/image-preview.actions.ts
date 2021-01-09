@@ -22,5 +22,6 @@ type ImagePreviewAction = SetPreviewImage
 export {
   ImagePreviewActionTypes,
   SetPreviewImage,
+  ResetPreviewImage,
   ImagePreviewAction,
 }

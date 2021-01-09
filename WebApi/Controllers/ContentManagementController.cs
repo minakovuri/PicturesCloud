@@ -14,11 +14,13 @@ namespace WebApi.Controllers
     [ApiController]
     public class ContentManagementController : ControllerBase
     {
-        private readonly ContentManagementService _service;
+        private readonly ContentManagementService _contentManagementService;
+        private readonly UserManagementService _userManagementService;
 
-        public ContentManagementController(ContentManagementService service)
+        public ContentManagementController(ContentManagementService contentManagementService, UserManagementService userManagementService)
         {
-            _service = service;
+            _contentManagementService = contentManagementService;
+            _userManagementService = userManagementService;
         }
 
         [HttpPost]
@@ -28,10 +30,10 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.CheckUserExists(userId);
+                User user = _userManagementService.GetUser(userId);
 
-                int imageId = _service.AddImage(request.FileName, request.FolderId, userId);
-                Image image = _service.GetImage(imageId);
+                int imageId = _contentManagementService.AddImage(request.FileName, request.FolderId, user);
+                Image image = _contentManagementService.GetImage(imageId);
 
                 return Ok(new AddImageResponse()
                 {
@@ -39,13 +41,19 @@ namespace WebApi.Controllers
                     ContentId = image.Id
                 });
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (ContentNotExistError e)
+            catch (ContentNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Родительская папка не найдена"
+                });
             }
             catch (Exception e)
             {
@@ -60,19 +68,25 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.CheckUserExists(userId);
+                _userManagementService.CheckUserExists(userId);
 
-                _service.RenameContent(request.ContentId, request.NewName);
+                _contentManagementService.RenameContent(request.ContentId, request.NewName);
 
                 return Ok();
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (ContentNotExistError e)
+            catch (ContentNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Материал не найден"
+                });
             }
             catch (Exception e)
             {
@@ -87,19 +101,25 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.CheckUserExists(userId);
+                _userManagementService.CheckUserExists(userId);
 
-                _service.UploadImage(image, uploadUrl);
+                _contentManagementService.UploadImage(image, uploadUrl);
 
                 return Ok();
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (ImageAlreadyUploadError e)
+            catch (ImageAlreadyUploadError)
             {
-                return StatusCode(StatusCodes.Status400BadRequest, new {message = e.Message});
+                return StatusCode(StatusCodes.Status400BadRequest, new
+                {
+                    message = "Изображение для материала уже загружено"
+                });
             }
             catch (Exception e)
             {
@@ -114,19 +134,25 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.CheckUserExists(userId);
+                _userManagementService.CheckUserExists(userId);
                 
-                _service.DeleteContent(contentId, userId);
+                _contentManagementService.DeleteContent(contentId, userId);
 
                 return Ok();
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (ContentNotExistError e)
+            catch (ContentNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Материал не найден"
+                });
             }
             catch (Exception e)
             {
@@ -141,9 +167,9 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.CheckUserExists(userId);
+                _userManagementService.CheckUserExists(userId);
 
-                var content = _service.GetContent(contentId);
+                var content = _contentManagementService.GetContent(contentId);
 
                 GetContentResponse response = new GetContentResponse()
                 {
@@ -152,13 +178,19 @@ namespace WebApi.Controllers
 
                 return Ok(response);
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (ContentNotExistError e)
+            catch (ContentNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Материал не найден"
+                });
             }
             catch (Exception e)
             {
@@ -173,22 +205,28 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.CheckUserExists(userId);
+                _userManagementService.CheckUserExists(userId);
 
-                int folderId = _service.AddFolder(request.FolderName, request.ParentFolderId, userId);
+                int folderId = _contentManagementService.AddFolder(request.FolderName, request.ParentFolderId, userId);
 
                 return Ok(new AddFolderResponse()
                 {
                     FolderId = folderId,
                 });
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (ContentNotExistError e)
+            catch (ContentNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Родительская папка не существует"
+                });
             }
             catch (Exception e)
             {
@@ -203,19 +241,25 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.CheckUserExists(userId);
+                _userManagementService.CheckUserExists(userId);
                 
-                _service.SetImageStarred(request.ImageId, request.Starred);
+                _contentManagementService.SetImageStarred(request.ImageId, request.Starred);
 
                 return Ok();
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (ContentNotExistError e)
+            catch (ContentNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Материал не найден"
+                });
             }
             catch (Exception e)
             {
@@ -230,22 +274,28 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.CheckUserExists(userId);
+                _userManagementService.CheckUserExists(userId);
 
-                var contents  = _service.GetContents(null, userId);
+                var contents  = _contentManagementService.GetContents(null, userId);
 
                 return Ok(new GetContentsResponse()
                 {
                     Contents = ApiContentMapper.MapContentsData(contents.ToArray()),
                 });
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (ContentNotExistError e)
+            catch (ContentNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Папка не найдена"
+                });
             }
             catch (Exception e)
             {
@@ -260,22 +310,28 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.CheckUserExists(userId);
+                _userManagementService.CheckUserExists(userId);
 
-                var folders = _service.ListFoldersTree(folderId);
+                var folders = _contentManagementService.ListFoldersTree(folderId);
 
                 return Ok(new ListFoldersTreeResponse()
                 {
                     Folders = ApiListFoldersTreeMapper.MapListFolderTree(folders.ToArray()),
                 });
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (ContentNotExistError e)
+            catch (ContentNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Папка не найдена"
+                });
             }
             catch (Exception e)
             {
@@ -290,22 +346,28 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.CheckUserExists(userId);
+                _userManagementService.CheckUserExists(userId);
 
-                var contents  = _service.GetContents(folderId, userId);
+                var contents  = _contentManagementService.GetContents(folderId, userId);
 
                 return Ok(new GetContentsResponse()
                 {
                     Contents = ApiContentMapper.MapContentsData(contents.ToArray()),
                 });
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (ContentNotExistError e)
+            catch (ContentNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Папка не найдена"
+                });
             }
             catch (Exception e)
             {
@@ -320,18 +382,21 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.CheckUserExists(userId);
+                _userManagementService.CheckUserExists(userId);
 
-                var contents = _service.GetStarredContents(userId);
+                var contents = _contentManagementService.GetStarredContents(userId);
 
                 return Ok(new GetContentsResponse()
                 {
                     Contents = ApiContentMapper.MapContentsData(contents.ToArray()),
                 });
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
             catch (Exception e)
             {
@@ -346,22 +411,28 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.CheckUserExists(userId);
+                _userManagementService.CheckUserExists(userId);
 
-                Image image = _service.GetImage(imageId);
+                Image image = _contentManagementService.GetImage(imageId);
 
                 return Ok(new PreviewImageResponse()
                 {
                     PreviewUrl = image.Path
                 });
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (ContentNotExistError e)
+            catch (ContentNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Материал не найден"
+                });
             }
             catch (Exception e)
             {
@@ -376,22 +447,28 @@ namespace WebApi.Controllers
             try
             {
                 var userId = Int32.Parse(User.Identity.Name);
-                _service.CheckUserExists(userId);
+                _userManagementService.CheckUserExists(userId);
 
-                Image image = _service.GetImage(imageId);
+                Image image = _contentManagementService.GetImage(imageId);
 
-                string downloadUrl = _service.GetImageUploadUrl(image);
+                string downloadUrl = _contentManagementService.GetImageUploadUrl(image);
                 string mimeType = MimeMapping.MimeUtility.GetMimeMapping(image.Name);
 
                 return PhysicalFile(downloadUrl, mimeType, image.Name);
             }
-            catch (UserNotExistError e)
+            catch (UserNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Пользователь не найден"
+                });
             }
-            catch (ContentNotExistError e)
+            catch (ContentNotExistError)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new {message = e.Message});
+                return StatusCode(StatusCodes.Status404NotFound, new
+                {
+                    message = "Материал не найден"
+                });
             }
             catch (Exception e)
             {

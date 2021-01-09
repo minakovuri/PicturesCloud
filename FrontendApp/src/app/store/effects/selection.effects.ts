@@ -3,8 +3,8 @@ import {switchMap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 
 import {LoadFolderContents, LoadFoldersList, LoadRootContents, LoadStarredContents} from '../actions/contents.actions';
-import {OpenAllMaterials, OpenFavourites, OpenFolder, SelectionActionTypes} from '../actions/view-model/selection.actions';
-import {SetAllMaterialsItem, SetFavouritesItem} from '../actions/view-model/breadcrumbs.actions';
+import {OpenAllMaterials, OpenFavourites, OpenFolder, SelectionActionTypes} from '../actions/selection.actions';
+import {SetAllMaterialsItem, SetFavouritesItem} from '../actions/breadcrumbs.actions';
 
 @Injectable()
 class SelectionEffects {

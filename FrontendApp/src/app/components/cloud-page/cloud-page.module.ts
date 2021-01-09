@@ -11,12 +11,12 @@ import { ContentAreaComponent } from './content-area/content-area.component';
 import { CommandPanelComponent } from './command-panel/command-panel.component';
 import { ImageItemComponent } from './content-area/image-item/image-item.component';
 import { FolderItemComponent } from './content-area/folder-item/folder-item.component';
-import { PreviewModalComponent } from './content-area/modals/preview-modal/preview-modal.component';
-import {CreateFolderModalComponent} from './content-area/modals/create-folder-modal/create-folder-modal.component';
+import { PreviewModalComponent } from '../modals/preview-modal/preview-modal.component';
+import {CreateFolderModalComponent} from '../modals/create-folder-modal/create-folder-modal.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
-import { RenameContentModalComponent } from './content-area/modals/rename-content-modal/rename-content-modal.component';
+import { RenameContentModalComponent } from '../modals/rename-content-modal/rename-content-modal.component';
 import { BreadcrumbsComponent } from './command-panel/breadcrumbs/breadcrumbs.component';
 
 @NgModule({

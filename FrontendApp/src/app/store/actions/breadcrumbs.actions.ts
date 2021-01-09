@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {FolderItem} from '../../reducers/breadcrumbs.reducer';
+import {FolderItem} from '../reducers/breadcrumbs.reducer';
 
 enum BreadcrumbsActionTypes {
   SET_FOLDER_ITEMS = '[Breadcrumbs] Set Folder Items',

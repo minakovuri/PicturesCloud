@@ -2,9 +2,9 @@ import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {select, Store} from '@ngrx/store';
-import {AppState} from '../../../../../store/state';
-import {renameContentPopupSelector} from '../../../../../store/selectors/rename-content-popup.selectors';
-import {RenameContent} from '../../../../../store/actions/view-model/rename-content-popup.actions';
+import {AppState} from '../../../store/state';
+import {renameContentPopupSelector} from '../../../store/selectors/rename-content-popup.selectors';
+import {RenameContent} from '../../../store/actions/rename-content-popup.actions';
 
 @Component({
   selector: 'app-rename-content-modal',
@@ -13,6 +13,7 @@ import {RenameContent} from '../../../../../store/actions/view-model/rename-cont
 })
 export class RenameContentModalComponent {
   form: FormGroup
+
   private contentId: number
 
   constructor(
@@ -26,18 +27,18 @@ export class RenameContentModalComponent {
     this.store
       .pipe(select(renameContentPopupSelector))
       .subscribe((renameContentPopup) => {
-        if (renameContentPopup.showPopup)
-        {
-          this.form.setValue({
-            name: renameContentPopup.currentName,
-          })
-          this.contentId = renameContentPopup.contentId
-        }
-        else
+        if (!renameContentPopup.showPopup)
         {
           this.activeModal.close()
         }
       })
+  }
+
+  setModalProperties(contentId: number, currentName: string): void {
+    this.contentId = contentId
+    this.form.setValue({
+      name: currentName,
+    })
   }
 
   onClose(): void {

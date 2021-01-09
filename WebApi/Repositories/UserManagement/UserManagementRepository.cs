@@ -41,7 +41,7 @@ namespace WebApi.Repositories.UserManagement
         {
             var user = _dbContext.Users.SingleOrDefault(x => x.Login == login);
             if (user == null)
-                throw new UserNotExistError("User not exist");
+                throw new UserNotExistError();
 
             return new User()
             {
@@ -57,7 +57,7 @@ namespace WebApi.Repositories.UserManagement
         {
             var user = _dbContext.Users.SingleOrDefault(x => x.Id == id);
             if (user == null)
-                throw new UserNotExistError("User not exist");
+                throw new UserNotExistError();
             
             return new User()
             {
@@ -73,7 +73,7 @@ namespace WebApi.Repositories.UserManagement
         {
             var entity = _dbContext.Users.SingleOrDefault(x => x.Id == id);
             if (entity == null)
-                throw new UserNotExistError("User not exist");
+                throw new UserNotExistError();
 
             entity.Login = user.Login;
             entity.Guid = user.Guid;

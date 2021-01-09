@@ -1,5 +1,5 @@
 import {SectionType} from './selection.reducer';
-import {BreadcrumbsAction, BreadcrumbsActionTypes} from '../actions/view-model/breadcrumbs.actions';
+import {BreadcrumbsAction, BreadcrumbsActionTypes} from '../actions/breadcrumbs.actions';
 
 function _getSectionTitle(type: SectionType): string {
   if (type === 'favourites')

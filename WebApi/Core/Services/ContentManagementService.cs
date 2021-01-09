@@ -19,30 +19,30 @@ namespace WebApi.Core.Services
             _fileStorage = fileStorage;
         }
         
-        public void CheckUserExists(int userId)
+        /*public void CheckUserExists(int userId)
         {
             var user = _repository.GetUser(userId);
 
             if (user == null)
-                throw new UserNotExistError("User not exist");
-        }
+                throw new UserNotExistError();
+        }*/
 
         public Image GetImage(int id)
         {
             Image image = _repository.GetImage(id);
             
             if (image == null)
-                throw new ContentNotExistError("content doesn't exist");
+                throw new ContentNotExistError();
             
             return image;
         }
 
-        public int AddImage(string fileName, int? folderId, int userId)
+        public int AddImage(string fileName, int? folderId, User user)
         {
-            var user = _repository.GetUser(userId);
+            //var user = _repository.GetUser(userId);
 
             if (folderId != null && _repository.GetFolder(folderId.Value) == null)
-                throw new ContentNotExistError("parent folder doesn't exist");
+                throw new ContentNotExistError();
 
             var guid = Guid.NewGuid().ToString();
             var uniqueFileName = guid + Path.GetExtension(fileName);
@@ -56,7 +56,7 @@ namespace WebApi.Core.Services
                     ? GetRootContentPath(uniqueFileName, user)
                     : GetContentPath(uniqueFileName, user, folderId.Value),
                 Starred = false,
-                UserId = userId,
+                UserId = user.Id,
             };
 
             int imageId = _repository.AddImage(image);
@@ -67,7 +67,7 @@ namespace WebApi.Core.Services
         public void RenameContent(int contentId, string newName)
         {
             if (_repository.GetContent(contentId) == null)
-                throw new ContentNotExistError("cannot find removable content");
+                throw new ContentNotExistError();
 
             _repository.RenameContent(contentId, newName);
         }
@@ -75,7 +75,7 @@ namespace WebApi.Core.Services
         public int AddFolder(string folderName, int? parentFolderId, int userId)
         {
             if (parentFolderId != null && _repository.GetFolder(parentFolderId.Value) == null)
-                throw new ContentNotExistError("parent folder doesn't exist");
+                throw new ContentNotExistError();
 
             var guid = Guid.NewGuid().ToString();
 
@@ -95,7 +95,7 @@ namespace WebApi.Core.Services
         public void UploadImage(IFormFile image, string uploadUrl)
         {
             if (_fileStorage.ImageExist(uploadUrl))
-                throw new ImageAlreadyUploadError("Image already upload");
+                throw new ImageAlreadyUploadError();
 
             _fileStorage.SaveImage(uploadUrl, image);
         }
@@ -108,7 +108,7 @@ namespace WebApi.Core.Services
         public void DeleteContent(int contentId, int userId)
         {
             if (_repository.GetContent(contentId) == null)
-                throw new ContentNotExistError("cannot find removable content");
+                throw new ContentNotExistError();
     
             Image image = _repository.GetImage(contentId);
             if (image != null)
@@ -133,7 +133,7 @@ namespace WebApi.Core.Services
             Content content = _repository.GetContent(contentId);
             
             if (content == null)
-                throw new ContentNotExistError("content doesn't exist");
+                throw new ContentNotExistError();
 
             return content;
         }
@@ -169,7 +169,7 @@ namespace WebApi.Core.Services
         public List<Content> GetContents(int? folderId, int userId)
         {
             if (folderId != null && _repository.GetFolder(folderId.Value) == null)
-                throw new ContentNotExistError("folder doesn't exist");
+                throw new ContentNotExistError();
 
             return _repository.GetContents(folderId, userId);
         }
@@ -177,7 +177,7 @@ namespace WebApi.Core.Services
         public void SetImageStarred(int imageId, bool starred)
         {
             if (_repository.GetContent(imageId) == null)
-                throw new ContentNotExistError("cannot find content");
+                throw new ContentNotExistError();
             
             _repository.SetImageStarred(imageId, starred);
         }

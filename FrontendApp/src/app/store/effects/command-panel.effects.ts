@@ -9,7 +9,7 @@ import {
   CommandPanelActionTypes,
   GetContent, OpenProfilePage,
   UploadImage
-} from '../actions/view-model/command-panel.actions';
+} from '../actions/command-panel.actions';
 import {ApiDataToModelDataMappers, ContentManagementService} from '../../services/content-management.service';
 import {AppState} from '../state';
 import {AddContent} from '../actions/contents.actions';

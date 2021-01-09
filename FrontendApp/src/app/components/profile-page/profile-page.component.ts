@@ -13,16 +13,19 @@ import {
   OpenChangeLoginPopup,
   OpenChangePasswordPopup,
   ProfilePageActionTypes
-} from '../../store/actions/view-model/profile-page.actions';
+} from '../../store/actions/profile-page.actions';
 import {ChangePasswordModalComponent} from './modals/change-password-modal/change-password-modal.component';
 import {Actions, ofType} from '@ngrx/effects';
+import {Subscription} from 'rxjs';
+import {SubscriptionsComponent} from '../common/subscriptions.component';
 
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
   styleUrls: ['./profile-page.component.css']
 })
-export class ProfilePageComponent implements OnInit, OnDestroy {
+
+export class ProfilePageComponent extends SubscriptionsComponent {
   user: User | null
 
   constructor(
@@ -30,6 +33,8 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     updates$: Actions
   ) {
+    super()
+
     this.user = null
 
     this.store
@@ -38,26 +43,28 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
         this.user = authState.user
       })
 
-    updates$.pipe(ofType(ProfilePageActionTypes.OPEN_CHANGE_LOGIN_POPUP))
+    this.subscriptions.push(updates$.pipe(ofType(ProfilePageActionTypes.OPEN_CHANGE_LOGIN_POPUP))
       .subscribe(() => {
         this.modalService.open(ChangeLoginModalComponent, {
           centered: true
         })
       })
+    )
 
-    updates$.pipe(ofType(ProfilePageActionTypes.OPEN_CHANGE_PASSWORD_POPUP))
+    this.subscriptions.push(updates$.pipe(ofType(ProfilePageActionTypes.OPEN_CHANGE_PASSWORD_POPUP))
       .subscribe(() => {
         this.modalService.open(ChangePasswordModalComponent, {
           centered: true,
         })
       })
+    )
   }
 
-  ngOnInit(): void {
+  onInit(): void {
     this.store.dispatch(new GetUser())
   }
 
-  ngOnDestroy(): void {
+  onDestroy(): void {
     this.store.dispatch(new CloseChangeLoginPopup())
     this.store.dispatch(new CloseChangePasswordPopup())
   }

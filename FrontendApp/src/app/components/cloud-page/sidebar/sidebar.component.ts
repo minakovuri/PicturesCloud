@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {select, Store} from '@ngrx/store';
 
 import {AppState} from '../../../store/state';
-import {OpenAllMaterials, OpenFavourites} from '../../../store/actions/view-model/selection.actions';
+import {OpenAllMaterials, OpenFavourites} from '../../../store/actions/selection.actions';
 import {SelectionState} from '../../../store/reducers/selection.reducer';
 import {selectionStateSelector} from '../../../store/selectors/selection.selectors';
 
