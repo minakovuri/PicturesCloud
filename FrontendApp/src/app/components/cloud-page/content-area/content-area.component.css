@@ -18,6 +18,7 @@
 
 .content-item {
   flex: 0 0 200px;
+  width: 200px;
   height: 220px;
   border: 2px solid var(--border-color);
   border-radius: 3px;

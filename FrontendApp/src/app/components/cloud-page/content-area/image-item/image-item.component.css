@@ -32,6 +32,9 @@
 .image-name {
   font-weight: 500;
   font-family: var(--content-font-family);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
 }
 
 .popover-button {
